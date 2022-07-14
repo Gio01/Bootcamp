@@ -1,0 +1,61 @@
+<!--Every time the button is clicked you have to display the num of time the
+button is clicked on the screen!-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Click Tracker</title>
+
+    <!--The functions within the script are accesible within the global scope 
+    which is the window! So how can we hide functions without allowing the window
+    or global scope to not have access to the functions? Meaning private functions?
+    
+
+    By putting the function myApp wrapper around our entire code we are not 
+    able to access these functions within the console!! We can also now not 
+    modify the numClick() directly from the console! This means we cannot do 
+    things like change the count or even remove the event handler entirely!
+    - so if you want to hide anything you need to wrap it in a function!
+    However! This means we can still access the myApp() directly so how can we
+    hide this function now? Well we cannot just add a function on top of it 
+    because that will just cause a loop
+
+    We can use immediately invoked functions as they will run and then get 
+    destroyed which means that we will not even have access to the myApp() 
+    functions at all and not the myApp() itself either!!
+    -->
+    <script>
+        (function myApp(){ //outer func 1.
+            //Now here since we have a variable within the function scope and we
+            //run the function immediately the variable should be erased but it 
+            //is not as we can see the click count go up so why? This is a closure!
+
+            let numClick = 0; //outer variable 2. 
+
+            function onBtnTrackClick(){ //inner funct 3. 
+                numClick++; //variable used within an inner funct 4.
+                const div = document.getElementById('divCounter');
+                div.textContent = numClick;
+            }
+
+            function onDocumentLoad(){
+                const btnTrack = document.getElementById('btnTrack');
+                btnTrack.addEventListener('click', onBtnTrackClick);//event listner
+                //that causes the extension of the variable (closure) 5.
+            }
+
+            window.addEventListener('load', onDocumentLoad);
+        }) ();
+
+        //myApp()
+    </script>
+</head>
+<body>
+    <h1>Click Tracker</h1>
+    <hr>
+    <button id="btnTrack">Track</button>
+    <div id="divCounter">0</div>
+</body>
+</html>
