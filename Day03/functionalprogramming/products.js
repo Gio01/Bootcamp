@@ -19,13 +19,39 @@
  *          where the transformationFunc will be able to take a value in the list
  *          and transform it into the desired value
  * 
+ *      transformationFunc(v) => t
+ * 
  *      map(list, transformationFunc) //=> [t1, t2, t3, t4]
  *      - the map here will contain the loop 
  * 
  *      Use case: create a new list of products with the 10% discount applied on the cost
- * 
+ *      
  * 
  *  - group
+ *      Use Case: We want to group together the products by category
+ * 
+ *      Outcome:
+ *          {
+ *              "stationary" : [
+*                       {id : 6, name : 'Pen', cost : 50, units : 20, category : 'stationary'},
+                        {id : 9, name : 'Ten', cost : 70, units : 70, category : 'stationary'}
+ *              ],
+                "grocery" : [
+                    {id : 3, name : 'Len', cost : 60, units : 60, category : 'grocery'},
+	                {id : 5, name : 'Zen', cost : 30, units : 30, category : 'grocery'}
+                ],
+                "utencil" : [
+                    {id : 1, name : 'Ken', cost : 20, units : 80, category : 'utencil'},
+                ],
+                "electronics" : [
+                    {id : 7, name : 'Mouse', cost : 100, units : 20, category : 'electronics'}
+                ]
+ *          }
+ * 
+ *      Use case 2: Group products by cost (costly/affordable)
+ *      Outcome:
+ * 
+ *      Use Case 3: Group products based on units (understocked/wellstocked)
  * 
  * IMPORTANT: we are to not use the built in functions within the Array prototype
  */
@@ -318,6 +344,141 @@ describe('Filter', function(){
             })
 
         });
+
+    })
+})
+
+
+describe('Map', function(){
+
+    function map(list, transformationFunc){
+        var discount = [];
+            for(var i = 0; i < list.length; i++){
+                var value = transformationFunc(list[i]);
+                discount.push(value)
+            }
+            return discount;
+    }
+
+    
+    describe('10% discount applied to the costs', function(){
+
+        function transformationFunc(prod){
+            /**
+             * Here we need to return a new object with the updated cost!
+             * That way we have the old products attributes and the updated version
+             */
+            return {
+                id: prod.id,
+                name: prod.name,
+                cost: prod['cost'] - (prod['cost'] * .10),
+                units: prod.units,
+                category: prod.category
+            }
+        }
+    
+        
+        console.table(products);
+        console.table(map(products, transformationFunc));
+        
+    });
+
+})
+
+describe('group', function(){
+    describe('grouping products by category', function() {
+        function groupProdByCategory(){
+            /*
+            This is my own implementation but it is very limited as this assumes that there are no 
+            more categories to exist but instead i should dynamically check to see if that category
+            is in the object and if not then just add a new array and add the objects within it!
+
+            var station = [];
+            var grocery = [];
+            var utencil = [];
+            var elec = [];
+
+            for(var i = 0; i < products.length; i++){
+                if(products[i]['category'] === 'stationary'){
+                    station.push(products[i]);
+                }
+                else if(products[i]['category'] === 'grocery'){
+                    grocery.push(products[i])
+                }
+                else if(products[i]['category'] === 'utencil'){
+                    utencil.push(products[i])
+                }
+                else if(products[i]['category'] === 'electronics'){
+                    elec.push(products[i])
+                }
+            }
+            //console.log(station)
+
+            return {
+                'stationary' : station,
+                'grocery' : grocery,
+                'utencil' : utencil,
+                'electronics' : elec
+            }
+            */
+           //This is the dynamic manner in which he created it
+            var result = {};
+            for (var i = 0; i < products.length; i++){
+                var product = products[i],
+                    category = product.category;
+                if (!(category in result)){
+                    //if the category is not within the object than we create the category
+                    //attribute and give it an empty array
+                    result[category] = [];
+                }
+                result[category].push(product) //we match the category and then add the 
+                //product objects within that array! This works because we initialize the empty
+                //array in the if statement so there will always exists that category since we
+                //dynamically check and create them in the object we return! Smart!!
+            }
+            return result;
+
+        }
+        console.log(groupProdByCategory())
+
+    })
+
+    describe('grouping any list by any category', function(){
+        function group(list, keySelectorFn){
+            var result = {};
+            for (var i = 0; i < list.length; i++){
+                var item = list[i],
+                    key = keySelectorFn(item);
+                if (!(key in result)){
+                    result[key] = [];
+                }
+                //this if statement above can be written as 
+                //result[key] = result[key] || [];
+                result[key].push(item)
+            }
+            return result;
+        }
+        describe('products by category', function(){
+            var productsByCategory = group(products, function(product){
+                console.log(product.category)
+                return product.category;
+            })
+            console.log(productsByCategory)
+
+        })
+        describe('products by cost (costly / affordable)', function(){
+            var productsByCost = group(products, function(product){
+                return product.cost <= 50 ? 'affordable' : 'costly'; 
+            });
+            console.log(productsByCost);
+        })
+
+         describe('products by units (understocked / wellstocked)', function(){
+            var productsByUnits = group(products, function(product){
+                return product.units < 50 ? 'understocked' : 'wellstocked'
+            })
+            console.log(productsByUnits);
+        })
 
     })
 })
