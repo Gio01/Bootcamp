@@ -13,6 +13,18 @@
  *      
  *  - forEach
  *  - map
+ *      Map is used for transformation! 
+ *      Ex: [v1, v2, v3, v4] => [t1, t2, t3, t4]
+ *      Needed: map(list, transformationFunc)
+ *          where the transformationFunc will be able to take a value in the list
+ *          and transform it into the desired value
+ * 
+ *      map(list, transformationFunc) //=> [t1, t2, t3, t4]
+ *      - the map here will contain the loop 
+ * 
+ *      Use case: create a new list of products with the 10% discount applied on the cost
+ * 
+ * 
  *  - group
  * 
  * IMPORTANT: we are to not use the built in functions within the Array prototype
