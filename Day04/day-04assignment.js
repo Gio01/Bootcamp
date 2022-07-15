@@ -33,6 +33,8 @@ let station = products.filter(element => {
     //look at each element in the array and match the category to stationary
     return element.category === 'stationary'
 })
+//here we need to use return explicitely because we are using the {} but if it was not there
+//then we do not need to return as it will return the single line
 
 console.log("1. Filtering Stationary Products: \n", station)
 
