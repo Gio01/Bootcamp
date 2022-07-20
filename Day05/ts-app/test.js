@@ -458,32 +458,8 @@ class StringList {
 class MyList {
     constructor() {
         this.collection = [];
-        this.groups = {}; //how we can create a generic map/dictionary
-        //groupby
-        // public group(keySelectorFn: (t: T) => string): MyList<T> {
-        //     let result = new MyList<T>();
-        //     for (var i = 0; i < this.collection.length; i++){
-        //         var item = this.collection[i],
-        //             key = keySelectorFn(item);
-        //             console.log("Item: ", item)
-        //             console.log("Key: ", key)
-        //         if(item.title === 'Angular'){
-        //             //console.log(item.title)
-        //             result.collection.push(item)
-        //         }
-        //         console.log(result)
-        //         // if (!(key in result)){
-        //         //     console.log(typeof result.collection)
-        //         //     console.log(typeof key)
-        //         //     result.collection[key] = [];
-        //         // }
-        //         // //this if statement above can be written as 
-        //         // //result[key] = result[key] || [];
-        //         // result.collection[key].push(item)
-        //     }
-        //     return result;
-        // }
     }
+    //private groups: {[key: string] : T} = {};//how we can create a generic map/dictionary
     add(no) {
         this.collection.push(no);
     }
@@ -546,6 +522,43 @@ class MyList {
         }
         return result;
     }
+    //groupby
+    group(keySelectorFn) {
+        //here it would be the same type T since we return the same number of properties
+        //so there is no need to create a new type of TResult! 
+        let result = new MyList();
+        let map = {};
+        for (var i = 0; i < this.collection.length; i++) {
+            console.log('Key selector function return -> ', keySelectorFn(this.collection[i]));
+            var item = this.collection[i], key = keySelectorFn(item);
+            console.log("Item: ", item, 'is typeof ', typeof key);
+            console.log("Key: ", key);
+            if (!(key in this.collection)) {
+                console.log('Key in the collection boolean: ', key in this.collection);
+                console.log('item at each check for a non existing key: ', item);
+                console.log("Key in collection: ", key);
+                console.log(result);
+                console.log(result.collection.map);
+                map[key] = new Array;
+                console.log(map);
+            }
+            console.log('item after the array and key is created: ', item);
+            map[key].push(item);
+            console.log('data pushed into each map: ', map);
+            // if (!(key in result)){
+            //     console.log(typeof result.collection)
+            //     console.log(typeof key)
+            //     result.collection[key] = [];
+            // }
+            // //this if statement above can be written as 
+            // //result[key] = result[key] || [];
+            // result.collection[key].push(item)
+        }
+        result.collection.push(map);
+        console.log('Result from group by: ', result);
+        console.log('Map within the collection in result: ', result.collection.map);
+        return result;
+    }
 }
 let numList2 = new MyList();
 numList2.add(10);
@@ -590,7 +603,9 @@ console.log(discountedBooks);
 /**
  * Give a try in implementing groupBy
  */
-// let grouped = books.group(function(book){
-//     console.log(book.title)
-//     return book.title;
-// })
+let grouped = books.group(book => {
+    //console.log('Grouped by: ', book.title)
+    return book.title;
+});
+console.log(grouped);
+//console.log(books)

@@ -1,3 +1,4 @@
+import { copyIfPresent } from "firebase-functions/lib/common/encoding";
 import { isThrowStatement, NumberLiteralType } from "typescript";
 
 console.log("Hello There! How are you?");
@@ -614,7 +615,7 @@ class StringList {
 
 class MyList<T> {
     private collection: T[] = [];
-    private groups: {[key: string] : T} = {};//how we can create a generic map/dictionary
+    //private groups: {[key: string] : T} = {};//how we can create a generic map/dictionary
 
     public add(no: T): void{
         this.collection.push(no);
@@ -690,31 +691,55 @@ class MyList<T> {
 
     //groupby
 
-    // public group(keySelectorFn: (t: T) => string): MyList<T> {
-    //     let result = new MyList<T>();
-        
-    //     for (var i = 0; i < this.collection.length; i++){
-    //         var item = this.collection[i],
-    //             key = keySelectorFn(item);
-    //             console.log("Item: ", item)
-    //             console.log("Key: ", key)
-    //         if(item.title === 'Angular'){
-    //             //console.log(item.title)
+    public group(keySelectorFn: (t: T) => string): MyList<T> {
+        //here it would be the same type T since we return the same number of properties
+        //so there is no need to create a new type of TResult! 
 
-    //             result.collection.push(item)
-    //         }
-    //         console.log(result)
-    //         // if (!(key in result)){
-    //         //     console.log(typeof result.collection)
-    //         //     console.log(typeof key)
-    //         //     result.collection[key] = [];
-    //         // }
-    //         // //this if statement above can be written as 
-    //         // //result[key] = result[key] || [];
-    //         // result.collection[key].push(item)
-    //     }
-    //     return result;
-    // }
+        //here we are sending back a string such as book title of Angular when we call
+        //the keySelectorFn! 
+        type MapType<T> = { 
+            [id: string]: object; 
+        }
+
+        let result = new MyList<T>();
+        let map = {};
+        
+        
+        for (var i = 0; i < this.collection.length; i++){
+            console.log('Key selector function return -> ', keySelectorFn(this.collection[i]))
+            var item = this.collection[i],
+                key:string = keySelectorFn(item);
+                console.log("Item: ", item, 'is typeof ', typeof key)
+                console.log("Key: ", key)
+
+            if(!(key in this.collection)){
+                console.log('Key in the collection boolean: ' ,key in this.collection)
+                console.log('item at each check for a non existing key: ', item)
+                console.log("Key in collection: ", key)
+                console.log(result)
+                console.log(result.collection.map)
+                map[key] = new Array<T>;
+                console.log(map)
+            }
+            console.log('item after the array and key is created: ', item)
+            map[key].push(item)
+            console.log('data pushed into each map: 'map)
+            
+            
+            // if (!(key in result)){
+            //     console.log(typeof result.collection)
+            //     console.log(typeof key)
+            //     result.collection[key] = [];
+            // }
+            // //this if statement above can be written as 
+            // //result[key] = result[key] || [];
+            // result.collection[key].push(item)
+        }
+        result.collection.push(map)
+        console.log('Result from group by: ', result)
+        console.log('Map within the collection in result: ', result.collection.map)
+        return result;
+    }
 }
 
 
@@ -778,11 +803,16 @@ let discountedBooks = books.map(book => ({ title : book.title, cost : book.cost 
 console.log("Discounted Books")
 console.log(discountedBooks)
 
+
+
+
 /**
  * Give a try in implementing groupBy
  */
-// let grouped = books.group(function(book){
-//     console.log(book.title)
-//     return book.title;
-// })
+ let grouped = books.group(book => {
+    //console.log('Grouped by: ', book.title)
+    return book.title;
+})
 
+console.log(grouped)
+//console.log(books)

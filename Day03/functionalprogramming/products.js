@@ -450,6 +450,7 @@ describe('group', function(){
             for (var i = 0; i < list.length; i++){
                 var item = list[i],
                     key = keySelectorFn(item);
+                    console.log('Key inside of group by: ', key, 'is typeof: ', typeof key)
                 if (!(key in result)){
                     result[key] = [];
                 }
