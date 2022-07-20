@@ -304,6 +304,7 @@ describe('Filter', function(){
             //describes() so that we are able to access the same function within the Costly
             //products and also the Affordable ones
             var costlyProductPredicate = function(product){
+                console.log("costly prodicts predicate return", product.cost > 50)
                 return product.cost > 50;
             };
 

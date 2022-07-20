@@ -614,6 +614,7 @@ class StringList {
 
 class MyList<T> {
     private collection: T[] = [];
+    private groups: {[key: string] : T} = {};//how we can create a generic map/dictionary
 
     public add(no: T): void{
         this.collection.push(no);
@@ -685,6 +686,35 @@ class MyList<T> {
         }
         return result;
     }
+
+
+    //groupby
+
+    // public group(keySelectorFn: (t: T) => string): MyList<T> {
+    //     let result = new MyList<T>();
+        
+    //     for (var i = 0; i < this.collection.length; i++){
+    //         var item = this.collection[i],
+    //             key = keySelectorFn(item);
+    //             console.log("Item: ", item)
+    //             console.log("Key: ", key)
+    //         if(item.title === 'Angular'){
+    //             //console.log(item.title)
+
+    //             result.collection.push(item)
+    //         }
+    //         console.log(result)
+    //         // if (!(key in result)){
+    //         //     console.log(typeof result.collection)
+    //         //     console.log(typeof key)
+    //         //     result.collection[key] = [];
+    //         // }
+    //         // //this if statement above can be written as 
+    //         // //result[key] = result[key] || [];
+    //         // result.collection[key].push(item)
+    //     }
+    //     return result;
+    // }
 }
 
 
@@ -727,13 +757,21 @@ interface Book {
  books.add({id : 1, title : 'Angular', isbn : '34723198474', cost : 59.99})
  books.add({id : 2, title : 'React', isbn : '34682649789', cost : 49.99})
  books.add({id : 3, title : 'TypeScript', isbn : '809038388', cost : 29.99})
-
+ books.add({id : 4, title : 'Angular', isbn : '809038399', cost : 19.99})
+ console.log("Books Data: ", books)
 
 let cheapBooks = books.filter(book => book.cost < 50)
 console.log(cheapBooks.values)
 
-//let sortBooks = books.sort();
-//console.log(sortBooks)
+// let productsComparerByValue = function(p1: number, p2: number){
+//     var p1Value = p1.cost * p1.units,
+//         p2Value = p2.cost * p2.units;
+//     if (p1Value < p2Value) return -1;
+//     if (p1Value > p2Value) return 1;
+//     return 0;
+// }
+// sort(productsComparerByValue);
+// console.table(products)
 
 let discountedBooks = books.map(book => ({ title : book.title, cost : book.cost * 0.9}))
 
@@ -743,3 +781,8 @@ console.log(discountedBooks)
 /**
  * Give a try in implementing groupBy
  */
+// let grouped = books.group(function(book){
+//     console.log(book.title)
+//     return book.title;
+// })
+
