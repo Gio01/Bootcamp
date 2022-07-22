@@ -5,7 +5,7 @@
 //in the ShapeBase which is the highest in the hierarchy then we do not need 
 //to also implement the SHape interface within the rectangle and the circle class!
 
-abstract class ShapeBase implements Shape{
+abstract class ShapeBase2 implements Shape{
     
     constructor(public name : string){
 
@@ -21,7 +21,7 @@ interface Shape{
     perimeter() : number
 }
 
-class Rectangle extends ShapeBase implements Shape {
+class Rectangle5 extends ShapeBase2 implements Shape {
     constructor(name : string, public height : number, public width : number){
         super(name)
     }
@@ -36,7 +36,7 @@ class Rectangle extends ShapeBase implements Shape {
 
 }
 
-class Circle extends ShapeBase implements Shape{
+class Circle2 extends ShapeBase2 implements Shape{
     constructor(name : string, public radius : number){
         super(name)
     }
@@ -52,28 +52,28 @@ class Circle extends ShapeBase implements Shape{
 
 
 
-function printStats(obj : ShapeBase){
+function printStats3(obj : ShapeBase2){
     console.log('Name = ', obj.name)
     //let objAsShape = (obj as unknown) as Shape;
     console.log("Area = ", obj.area())
     console.log("Perimiter = ", obj.perimeter()) 
 }
 
-let box : Rectangle = new Rectangle("rectangle", 10, 11)
+let box3 : Rectangle5 = new Rectangle5("rectangle", 10, 11)
 /* 
 console.log("Area = ", box.area())
 console.log("Perimiter = ", box.perimeter()) 
 */
 
-printStats(box);
+printStats3(box3);
 
-let circle : Circle = new Circle("circle", 12)
+let circle3 : Circle2 = new Circle2("circle", 12)
 /* 
 console.log("Area = ", circle.area())
 console.log("Perimiter = ", circle.perimeter()) 
 */
 
-printStats(circle)
+printStats(circle3)
 
 
 

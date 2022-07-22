@@ -1,0 +1,253 @@
+<!-- 
+    https://material.angular.io/
+    
+    01. initial implementation
+    02. Seperate UI and NON UI responsibilities
+    03. View updating the model based on when the data is available
+    04. Model informing the view whenever the salary is changing
+    05. Introducing setter, getter and onChange for 'basic' in the model
+    06. Introducing setter, getter and subscribe for all the attributes
+    07. refactoring to avoid duplication (introducing 'set' and 'get' methods)
+    08. adding provisions to accommodate more than one subscriber
+ -->
+ 
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Salary Calculator</title>
+     <style>
+         body{
+             margin-left: 50px;
+         }
+         .field{
+             margin-bottom: 10px;
+         }
+         label{
+             display: block;
+         }
+         td{
+             padding-right: 10px;
+             font-size: 18pt;
+         }
+     </style>
+     <script src="jquery-3.6.0.js"></script>
+     <script>
+         /* state & behavior */
+         /* observable model */
+         class SalaryCalculatorModel {
+             //state
+             _data = {
+                 basic : 0,
+                 hra : 0,
+                 da : 0,
+                 tax : 0,
+                 salary : 0
+             };
+             
+             _callbacks = {
+                 basic : [],
+                 hra : [],
+                 da : [],
+                 tax : [],
+                 salary : []
+             };
+ 
+             subscribe(attrName, callbackFn){
+                 if (typeof callbackFn !== 'function') return;
+                 this._callbacks[attrName].push(callbackFn);
+             }
+ 
+             get(attrName){
+                 return this._data[attrName];
+             }
+ 
+             set(attrName, val){
+                 this._data[attrName] = val;
+                 let callbackFns = this._callbacks[attrName];
+                 callbackFns.forEach(callbackFn => callbackFn())
+             }
+             
+             //behavior
+             calculate(){
+                 let gross = this.get('basic') + this.get('hra') + this.get('da'),
+                     net = gross * ((100-this.get('tax'))/100);
+                 this.set('salary', net);
+                 
+             }
+         }
+ 
+ /*
+ View has:
+ - presentation (template)
+ - User interaction
+ - reflecting model changes in the presentation
+
+ Things that you need to be careful of:
+         - any event binding should happen only on the $root (the view instance)
+         - DO NOT manipulate any domNode outside of the instance view ($root)
+
+         Because of this need to be careful coupled with the fact that we need to 
+         have way more than a single model can make things very complex and not
+         managable at a large scale which is why we use frameworks such as Angular
+         to help us out in the maintaining of all of the complexity in the code
+ */
+         class SalaryCalculator {
+             model = null;
+             _template = `
+                 <div class="field">
+                     <label for="">Basic :</label>
+                     <input type="number" name="" id="txtBasic">
+                 </div>
+                 <div class="field">
+                     <label for="">HRA :</label>
+                     <input type="number" name="" id="txtHra">
+                 </div>
+                 <div class="field">
+                     <label for="">DA :</label>
+                     <input type="number" name="" id="txtDa">
+                 </div>
+                 <div class="field">
+                     <label for="">Tax :</label>
+                     <input type="range" name="" id="rangeTax" min="0" max="30" value="0">
+                 </div>
+                 <div class="field">
+                     <button id="btnCalculate">Calculate</button>
+                 </div>
+                 <div class="field">
+                     <table>
+                         <tbody>
+                             <tr>
+                                 <td id="tdBasic">[basic]</td>
+                                 <td id="tdHra">[hra]</td>
+                                 <td id="tdDa">[da]</td>
+                                 <td id="tdTax">[tax]</td>
+                                 <td id="tdSalary">[salary]</td>
+                             </tr>
+                         </tbody>
+                     </table>
+                 </div>
+             `;
+             
+             $root = $('<div></div>');//The instance view! 
+ 
+             constructor(model){
+                 this.model = model;
+                 
+                 //Here this is the controller idea but here we are combining
+                 //the controller and view together!
+                 //technically tho the view is the template but within the 
+                 //view class we combined them both 
+                 this.$root.on('change', '#txtBasic', function () {
+                     model.set('basic', parseInt($(this).val()));
+                 });
+ 
+                 this.$root.on('change', '#txtHra', function () {
+                     model.set('hra', parseInt($(this).val()));
+                 });
+ 
+                 this.$root.on('change', '#txtDa', function () {
+                     model.set('da', parseInt($(this).val()));
+                 });
+ 
+                 this.$root.on('change', '#rangeTax', function () {
+                     model.set('tax', parseInt($(this).val()));
+                 });
+ 
+                 this.$root.on('click', '#btnCalculate', function () {
+                     model.calculate();
+                 });
+ 
+                 //Reacting to model changes
+                 /*
+                 Now we have a problem here! this.$root will be undefined since
+                 this is refering to the model in this case as it is the model
+                 calling the subscribe() but we want this to refer to this class
+                 so instead what we can do is define a new variable with the this
+                 from this class so that we can refer to the $root created within
+                 this SalaryCalculator class!
+                 */
+                //Now this will refer to the individual view that we are creating!
+                /*
+                So now when we run the code and create a model and two other or 
+                however many views, we will see that the changes are now 
+                seen in all of the views! But they all reference that single model!
+                so we have one model pointing to many views! 
+                */
+                let that = this;
+
+                /*
+                Here we needed to use that because the model has the this in this
+                context since we are calling model.subscribe() but $root does 
+                not exist in the model only within this  SalaryCalculator class
+                and hence in doing let that = this, that refers to this SalaryCalculator class
+                which does contain the $root which we need because we are refering to that
+                instance view's id's to be able to then populate the data onto that instance
+                dom!
+                */
+
+                model.subscribe('salary', function () {
+                    let val = model.get('salary');
+                    $('#tdSalary', that.$root).text(val);
+                });
+
+                //the txtBasic.val() here will be changing the value seen in the 
+                //Basic text box in the other view! In this manner we are able 
+                //to simultaneously see the changes across the view instances!!
+                model.subscribe('basic', function () {
+                    let val = model.get('basic');
+                    $('#tdBasic', that.$root).text(val);
+                    $('#txtBasic', that.$root).val(val);
+                });
+
+                model.subscribe('hra', function () {
+                    let val = model.get('hra');
+                    $('#tdHra', that.$root).text(val);
+                    $('#txtHra', that.$root).val(val);
+                });
+
+                model.subscribe('da', function () {
+                    let val = model.get('da');
+                    $('#tdDa', that.$root).text(val);
+                    $('#txtDa', that.$root).val(val);
+                });
+
+                model.subscribe('tax', function () {
+                    let val = model.get('tax');
+                    $('#tdTax', that.$root).text(val);
+                    $('#rangeTax', that.$root).val(val);
+                });
+ 
+             }
+         
+             render(){
+                 this.$root.html(this._template);
+                 return this;
+             }
+         }
+         //View
+         $(function(){
+             //DO NOT DO THIS IN PRODUCTION
+             window['model'] = new SalaryCalculatorModel();
+ 
+             //Startup Code to create the model and the view instances
+             let model = new SalaryCalculatorModel()
+             let view = new SalaryCalculator(model)
+             let view2 = new SalaryCalculator(model)
+
+
+             view.render().$root.appendTo(document.body)
+             view2.render().$root.appendTo(document.body)
+
+         });
+     </script>
+ </head>
+ <body>
+     <h1>Salary Calculator</h1>
+     <hr>
+     
+ </body>
+ </html>
+ 

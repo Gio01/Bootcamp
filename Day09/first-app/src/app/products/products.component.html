@@ -1,0 +1,20 @@
+<h3>Products</h3>
+<hr>
+<label for="">Product Name :</label>
+<input type="text" #productInput (input)="prodInput = productInput.value">
+<button (click)="add()">Add</button>
+<ul>
+    <li *ngFor="let prod of products" >
+        <span>{{prod}}</span>
+        <!-- Here we can simply pass the prod as that is the current element in 
+        the array that we are looking at into the remove function! 
+        Need to read what the errors are better!!
+         -->
+        <button (click)="remove(prod)"> X </button>
+    </li>
+
+    <!-- <li>
+        <span>Product - 2</span>
+        <button> X </button>
+    </li> -->
+</ul>

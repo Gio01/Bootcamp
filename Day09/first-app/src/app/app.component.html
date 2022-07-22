@@ -1,0 +1,79 @@
+
+<h1>{{ title }} app is running!</h1>
+<!-- <button (click)="title = 'Angular App'">Change Title</button> -->
+
+<button (click)="onChangeClickTitle()"> Change Title</button>
+<!--Now here notice how we do not need to use this.title as that this reference
+is already within this component html page which is why title knows that it is refering 
+to the AppComponent class and this is done because the app.component.ts 
+knows that templateUrl: './app.component.html', which means that it knows 
+the info that is within the app component class! 
+-->
+
+<!-- <div>
+  <h3>Spinner</h3>
+  <button (click)="decrementSpinner()">Decrement</button>
+  <span> [ {{counter}} ] </span>
+  <button (click)="incrementSpinner()">Increment</button>
+</div> -->
+
+<!-- Here we use the selector that we defined within the spinner conponent 
+so that we can then have this be the entry way for the html code and ts logic
+which we created in the spinner component ts & html -->
+
+<!-- Now here while we are using many different Spinner components 
+they all are difference instances of the same component which means 
+that each instance will have their own attribute values! so when we 
+increment one spinner that only changes the state of that individual
+instance of the spinner component and not any of the other spinners 
+on the page!! -->
+<!-- <app-spinner></app-spinner>
+<app-spinner></app-spinner>
+<app-spinner></app-spinner> -->
+
+<button (click)=" userChoice ='Spinner'">Spinner</button> 
+<button (click)=" userChoice ='Greeter'">Greeter</button>
+<button (click)=" userChoice ='Calculator'">Calculator</button>
+<button (click)=" userChoice ='Calculator2'">Calculator-2</button>
+<button (click)=" userChoice ='Products'">Products</button>
+<button (click)=" userChoice ='Pipes'">Pipes</button>
+<button (click)=" userChoice ='SalaryCalculator'">SalaryCalculator</button>
+<!-- In this manner what we are doing is simply giving the userChoice a value and when 
+we click a different value we override the original value with another value based on which button
+we click! In this manner when we use the ngIf what we are donig is just comparing if the value
+of the string is the same as that of the Spinner, Greeter, etcc. which ever one matches,
+it will display that component! 
+
+Again the idea is that when we want to see a change in the UI it is determined by the state 
+of something in the logic of the component!-->
+{{userChoice}}
+<!-- 
+<app-spinner *ngIf="userChoice == 'Spinner'" ></app-spinner>
+<app-greeter *ngIf="userChoice == 'Greeter'"></app-greeter>
+<app-calculator *ngIf="userChoice == 'Calculator'"></app-calculator>
+<app-calculator2 *ngIf="userChoice == 'Calculator2'"></app-calculator2>
+<app-products *ngIf="userChoice == 'Products'"></app-products> -->
+
+<!-- This is another in which the same thing can be done! Here we use a switch case
+based on the userChoice value! Same thing like the ngIf but a bit more 
+organized since we use the swith case here!  -->
+<div [ngSwitch]="userChoice">
+  <app-spinner *ngSwitchCase="'Spinner'"></app-spinner>
+  <app-greeter *ngSwitchCase="'Greeter'"></app-greeter>
+  <app-calculator *ngSwitchCase="'Calculator'"></app-calculator>
+  <app-calculator2 *ngSwitchCase="'Calculator2'"></app-calculator2>
+  <app-products *ngSwitchCase="'Products'"></app-products>
+  <app-pipes *ngSwitchCase="'Pipes'"></app-pipes>
+  <app-salary-calculator *ngSwitchCase="'SalaryCalculator'"></app-salary-calculator>
+  <div *ngSwitchDefault>Make a choice:</div>
+</div>
+<!-- Here we also have a default valie that we want to see in the UI which is 
+just the message to tell the user to Make a choice! Then they can click a button and 
+the corresponding component will be displayed!! -->
+
+<!-- NOTE: Again here all of this switching between components is all based on the 
+state value of the UserChoice which is managed in the directives.components.ts
+which again goes on that idea that the state is what is managing what is being
+displayed in the UI and NOT the UI having any state management or logic for what
+is being used to display things on the UI! -->
+

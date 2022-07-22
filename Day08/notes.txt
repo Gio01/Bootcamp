@@ -1,0 +1,83 @@
+Angular
+    this is a framework for building RIA (rich internet application) / SPA
+
+    When we are using web pages we do not need to use a big framework to do 
+    things like DOM manipulation to do simple things to manage a small project
+
+    However for building big applications we need to use a framework like Angular
+    to be able to make the application MAINTAINABLE
+
+Salary calculator
+    Salary = basic + HRA + DA - TAX%
+
+To solve this problem he used JQuery to be able to easily manipulate the DOM
+without needing to always do things like document.getElementById('button');
+
+SALARY CALCULATOR
+    Salary = Basic + HRA + DA - TAX(%)
+
+to get the value of a textbox, checkbox, range, dropdown, etc.
+    $('#txtBasic').val()
+
+to set the value of a textbox etc
+    $('#txtBasic').val(20000)
+
+to get the text displayed in an element
+    $('#tdBasic').text()
+
+to change the text displayed in an element
+    $('#tdBasic').text('10000')
+
+to subscribe to events of an element
+    $('#btnCalculate').click(function(){
+        console.log('calculate button clicked');
+    })
+
+
+Assumptions within the Salary calculator
+    we are not checking for any validations 
+        - this means that the user can always just not input a value that we need
+        to make the salary calculation which means that if there is no number
+        we will get back a NaN value!
+    
+    deployment team will take care of the organizatino of the js and the css
+    in their respective files. We do not need to worry about it as a developer
+
+    the current implemntation meets 100% of the application owner (meaning that 
+    our code works given that the user is able to give us all of the data)
+
+
+Now what are the issues with what we have created:
+- At the moment what we are doing is adding the calculator functonabilty into 
+he UI in the html where the UI should not have any of this as the UI is only
+focused on the view component of the webpage
+    > so here we need to add seperation in the roles of what plays what! In doing
+    so we can make applications MAINTAINABLE because now we know where to go to 
+    to handle the calculations.
+    > at the moment if there is a change needed to the calculator functonabilty
+    I need to go to the UI in the html to change the code and this causes for 
+    not MAINTAINABLE applications as as the application grows since all the logic
+    will be in one large html file holding the UI and also the functionality
+    > When the application gets soo large you will have a hard time of knowing
+    where in the large file the the change you need to make is at and then also
+    what can happen is that when you do make one change it can break everything 
+    because everything is so cluttered within a single file! 
+
+We want to seperate the UI and the functionality logic! 
+- we now created the version 2
+
+
+
+END GOAL:
+- we want to create views to be dumb! they should not do anything on their own!
+they need to only be printing data! No logic should be on the views!! This means
+that the view is reactive! They only react to the data given to them
+    > Meaning that the logic should all go into the model! Where the model is 
+    proactive 
+
+
+
+
+
+
+

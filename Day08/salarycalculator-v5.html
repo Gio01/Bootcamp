@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salary Calculator</title>
+    <style>
+        body{
+            margin-left: 50px;
+        }
+        .field{
+            margin-bottom: 10px;
+        }
+        label{
+            display: block;
+        }
+        td{
+            padding-right: 10px;
+            font-size: 18pt;
+        }
+    </style>
+    <script src="jquery-3.6.0.js"></script>
+    <script>
+        //Model
+        /* state & behavior */
+        class SalaryCalculatorModel {
+            //state
+            _basic = 0; //we will use this for the getter and setter
+            _hra = 0;
+            _da = 0;
+            _tax = 0;
+            _salary = 0;
+          
+            onSalaryChange = null;
+            onBasicChange = null;
+            onDaChange = null;
+            onTaxChange = null;
+
+            get basic(){
+                return this._basic;
+            }
+
+            set basic(val){
+                this._basic = val;
+                if(typeof this.onBasicChange === 'function'){
+                    this.onBasicChange();
+                }
+            }
+
+            get hra(){
+                return this._hra;
+            }
+
+            set hra(val){
+                this._hra = val;
+                if(typeof this.onHraChange === 'function'){
+                    this.onHraChange();
+                }
+            }
+
+            get da(){
+                return this._da;
+            }
+
+            set da(val){
+                this._da = val;
+                if(typeof this.onDaChange === 'function'){
+                    this.onDaChange();
+                }
+            }
+
+            get tax(){
+                return this._tax;
+            }
+
+            set tax(val){
+                this._tax = val;
+                if(typeof this.onTaxChange === 'function'){
+                    this.onTaxChange();
+                }
+            }
+
+            /*
+                Here we created the getters and setters to be able to
+                get the value of basic and also to set the value. Now the 
+                important aspect is the setter because upon changing the value
+                of the basic field we are calling the onBasicChange() which 
+                we defined within the view! We only declared it within the model
+                so that we can call it via the mode.onBasicChange but we define
+                it within the view so that we can then now get access to that 
+                data within the view!
+
+                Now Angular makes this a lot easier for us to do but this is 
+                what was needed to do in order to make applications loosely coupled!
+            */
+
+            //behavior
+            calculate(){
+                let gross = this.basic + this.hra + this.da,
+                    net = gross - (gross * (this.tax/100));
+                this.salary = net;
+                /*
+                However here within teh calculcate() we are not making a 
+                public change and is only private which means that the view
+                does not have any idea of the logic within the calculate 
+                method!!  meaning that a change we make here will not require
+                a change in the view unlike with the public change of adding the
+                public educationCess variable did as we then needed to add 
+                another change() call to get that user data into the model!
+                */
+
+                if(typeof this.onSalaryChange === 'function'){
+                    this.onSalaryChange();
+                }
+            }
+        }
+
+        /*
+            The reason in now creating a class is so that we now have seperation 
+            in the calculator logic and that of the displaying of the data onto
+            the UI. In this manner we seperate the responsabilities of the calc 
+            and the UI! 
+
+            This will help us to be able to better maintain the application in the
+            long run as we now know that if we need to make a change to the calc
+            functionality then we need to go to the class and not look into the UI
+            in the JQuery area and then if we need to change something within the
+            UI and how data is displayed then we will go into the JQuery area
+            in order to then make the changes we want for the UI of the application
+
+            However even now we still have some issues! What else do we need to 
+            change now to make this ready for deployment?
+            - We have an issue of tight coupling where If I make some change within the
+            Calc class such as addnig a new variable state, then uppon creating it 
+            and then using it in the calculate function, we will then need to go to the
+            UI Jquery to also be able to get the user to supply data to that new 
+            variable! In this manner it means that calculate relies on the data given 
+            by the JQuery UI. 
+                > Now how can we remove this dependancy (tight coupling) between the
+                Model calculate() and that of the data from the UI in the case where
+                we add a new variale or make changes within the class 
+
+
+            So instead we will use change() instead of click() so that we do not need
+            to wait until the user inputs all the data and clicks on the button 
+            but rather we can simply get data from the user from when ever they 
+            give it and hence becomes available!
+            
+        */ 
+
+        //View
+        $(function(){
+            
+            //let model = new SalaryCalculatorModel();
+
+            window['model'] = new SalaryCalculatorModel();
+
+            $('#txtBasic').change(function(){
+                model.basic = parseInt($(this).val());
+            });
+
+            $('#txtHra').change(function(){
+                model.hra = parseInt($(this).val()); 
+            });
+
+            $('#txtDa').change(function(){
+                model.da = parseInt($(this).val()); 
+            });
+
+            $('#rangeTax').change(function(){
+                model.tax = parseInt($(this).val()); 
+            });
+
+            /*
+                In this manner we now are able to pass information from the user
+                to the model without the user needing to input all of the data!
+
+                This is called 
+            */
+
+            $('#btnCalculate').click(function () {
+                //get the data from the controls
+                
+                //process the data
+                model.calculate();
+                /*
+                Now here note that we need to call the calculate method before
+                wanting to display any data in the ui! Otherwise it will not work
+                correctly! This again is a dependence! 
+                
+                The view relies on calling the calculate method to get the salary 
+                which means that it knows about the intenal method of the model! 
+                In this manner we are still doing tight coupling!! 
+
+                So how can we make this to be loosely coupled?
+                - we need a manner by which the model can tell the view that the
+                salary has been changes and only needs to display the salary!
+
+                At the moment the view has knowledge of the model as we are doing
+                window['model'] = new SalaryCalculatorModel();
+                and also calling the model fields to get the data to display!
+
+                We need a means by which the model can then have knowledge of the
+                view as well so that the model can tell the view of when the 
+                salary value is changing!                 
+                */
+                
+                //display the result in the ui
+                
+                $('#tdHra').text(model.hra);
+                $('#tdDa').text(model.da);
+                $('#tdTax').text(model.tax);
+                
+            });
+
+            model.onSalaryChange = function(){
+                   $('#tdSalary').text(model.salary); 
+                }
+
+                /*
+                Now in doing this onSalaryChange() what happens is that the view
+                does not need to call calculate() before displaying the data, there
+                is no depedency now! What happens is that the model will tell 
+                the view when the salary data has been calclated and once it
+                has then it will display it on the screen! This happens when 
+                the model.calculate() is called and then it will check to see 
+                if the onSalaryChange is a function which it is as here we do 
+                model.onSalaryChange = function which will then simply call the 
+                onSalaryFunction which we define within the view. However in this 
+                manner the model is calling the function we created in the view
+                when the data is ready after calling the calculate()
+
+                calculate() -> check the onSalaryChange -> call onSalaryChange ->
+                    diplay the salary
+                
+                view -> model -> model -> view (now we can go back from view to 
+                model!)
+                */
+            
+            model.onBasicChange = function(){
+                $('#tdBasic').text(model.basic);
+                //console.log(model.get('basic'))
+            }
+            //in this manner we now are also avle to change the state of the model
+            //and be able to display the basic value whenever it changes!!
+
+            model.onHraChange = function(){
+                $('#tdHra').text(model.hra);
+            }
+
+            model.onDaChange = function(){
+                $('#tdDa').text(model.da);
+            }
+
+            model.onTaxChange = function(){
+                $('#tdTax').text(model.tax);
+            }
+            
+        });
+    </script>
+</head>
+<body>
+    <h1>Salary Calculator</h1>
+    <hr>
+    <div class="field">
+        <label for="">Basic :</label>
+        <input type="number" name="" id="txtBasic">
+    </div>
+    <div class="field">
+        <label for="">HRA :</label>
+        <input type="number" name="" id="txtHra">
+    </div>
+    <div class="field">
+        <label for="">DA :</label>
+        <input type="number" name="" id="txtDa">
+    </div>
+    <div class="field">
+        <label for="">Tax :</label>
+        <input type="range" name="" id="rangeTax" min="0" max="30" value="0">
+    </div>
+    <div class="field">
+        <button id="btnCalculate">Calculate</button>
+    </div>
+    <div class="field">
+        <table>
+            <tbody>
+                <tr>
+                    <td id="tdBasic">[basic]</td>
+                    <td id="tdHra">[hra]</td>
+                    <td id="tdDa">[da]</td>
+                    <td id="tdTax">[tax]</td>
+                    <td id="tdSalary">[salary]</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

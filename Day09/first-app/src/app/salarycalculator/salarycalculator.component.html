@@ -1,0 +1,60 @@
+<h3>Salary Calculator</h3>
+<hr>
+<div class="field">
+    <label for="">Basic :</label>
+    <input type="number" (input)="model.basic = $any($event.target).valueAsNumber">
+</div>
+<div class="field">
+    <label for="">HRA :</label>
+    <input type="number" (input)="model.hra = $any($event.target).valueAsNumber">
+</div>
+<div class="field">
+    <label for="">DA :</label>
+    <input type="number" (input)="model.da = $any($event.target).valueAsNumber">
+</div>
+<div class="field">
+    <label for="">Tax :</label>
+    <input type="range" (input)="model.tax = $any($event.target).valueAsNumber" min="0" max="30" value="0">
+</div>
+<div class="field">
+    <button (click)="model.calculate()">Calculate</button>
+</div>
+<!-- So here we are directly sending the input data into the component 
+but on the instance of the model that we are creating within the component
+class to then be able to send the data to the model class and have the
+calculate logic there! In this manner we have seperation of logic and 
+UI logic!
+
+So once we send all of the data into the single model instance that we created
+within the salary component what we are doing is then using that data to 
+to the calculations. Once that is done we then change the salary values based on
+the calculate() return value and then assign that value to the salary state 
+within the model class!
+
+NOTE: here we can also directly display the inputs from the user onto the
+UI through the template usage and then refering to the model.basic as we
+have access to the component data from the UI view! Just not the other way 
+from the component getting direct access to the UI data and that is why we 
+always need to pass data in some manner to the component through creating 
+the variable of a same name in the (input)for example or sending data 
+directly as a param to a method that is declared within the component class!
+
+The model.basic, etc... will automatically get displayed as the (input) above
+will assign the new input value to that of the model states and hence we will
+then be able to directly display that value in our UI
+
+
+-->
+<div class="field">
+    <table>
+        <tbody>
+            <tr>
+                <td>{{model.basic}}</td>
+                <td>{{model.hra}}</td>
+                <td>{{model.da}}</td>
+                <td>{{model.tax}}</td>
+                <td>{{model.salary | currency}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

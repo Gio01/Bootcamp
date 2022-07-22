@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salary Calculator</title>
+    <style>
+        body{
+            margin-left: 50px;
+        }
+        .field{
+            margin-bottom: 10px;
+        }
+        label{
+            display: block;
+        }
+        td{
+            padding-right: 10px;
+            font-size: 18pt;
+        }
+    </style>
+    <script src="jquery-3.6.0.js"></script>
+    <script>
+        /* state & behavior */
+        class SalaryCalculatorModel {
+            //state
+            basic = 0;
+            hra = 0;
+            da = 0;
+            tax = 0;
+            salary = 0;
+
+            //behavior
+            calculate(){
+                let gross = this.basic + this.hra + this.da,
+                    net = gross - (gross * (this.tax/100));
+                this.salary = net;
+            }
+        }
+
+        /*
+            The reason in now creating a class is so that we now have seperation 
+            in the calculator logic and that of the displaying of the data onto
+            the UI. In this manner we seperate the responsabilities of the calc 
+            and the UI! 
+
+            This will help us to be able to better maintain the application in the
+            long run as we now know that if we need to make a change to the calc
+            functionality then we need to go to the class and not look into the UI
+            in the JQuery area and then if we need to change something within the
+            UI and how data is displayed then we will go into the JQuery area
+            in order to then make the changes we want for the UI of the application
+
+            However even now we still have some issues! What else do we need to 
+            change now to make this ready for deployment?
+            - We have an issue of tight coupling where If I make some change within the
+            Calc class such as addnig a new variable state, then uppon creating it 
+            and then using it in the calculate function, we will then need to go to the
+            UI Jquery to also be able to get the user to supply data to that new 
+            variable! In this manner it means that calculate relies on the data given 
+            by the JQuery UI. 
+                > Now how can we remove this dependancy (tight coupling) between the
+                Model calculate() and that of the data from the UI in the case where
+                we add a new variale or make changes within the class 
+
+
+            So instead we wil use change() instead of click() so that we do not need
+            to wait until the user inputs all the data and clicks on the button 
+            but rather we can simply get data from the user from when ever they 
+            give it and hence becomes available!
+        */ 
+
+        $(function(){
+            
+            let model = new SalaryCalculatorModel();
+
+            $('#btnCalculate').click(function () {
+                //get the data from the controls
+                model.basic = parseInt($('#txtBasic').val());
+                model.hra = parseInt($('#txtHra').val());
+                model.da = parseInt($('#txtDa').val());
+                model.tax = parseInt($('#rangeTax').val());
+
+                
+                //process the data
+                model.calculate();
+                
+                //display the result in the ui
+                $('#tdBasic').text(model.basic);
+                $('#tdHra').text(model.hra);
+                $('#tdDa').text(model.da);
+                $('#tdTax').text(model.tax);
+                $('#tdSalary').text(model.salary);
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Salary Calculator</h1>
+    <hr>
+    <div class="field">
+        <label for="">Basic :</label>
+        <input type="number" name="" id="txtBasic">
+    </div>
+    <div class="field">
+        <label for="">HRA :</label>
+        <input type="number" name="" id="txtHra">
+    </div>
+    <div class="field">
+        <label for="">DA :</label>
+        <input type="number" name="" id="txtDa">
+    </div>
+    <div class="field">
+        <label for="">Tax :</label>
+        <input type="range" name="" id="rangeTax" min="0" max="30" value="0">
+    </div>
+    <div class="field">
+        <button id="btnCalculate">Calculate</button>
+    </div>
+    <div class="field">
+        <table>
+            <tbody>
+                <tr>
+                    <td id="tdBasic">[basic]</td>
+                    <td id="tdHra">[hra]</td>
+                    <td id="tdDa">[da]</td>
+                    <td id="tdTax">[tax]</td>
+                    <td id="tdSalary">[salary]</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

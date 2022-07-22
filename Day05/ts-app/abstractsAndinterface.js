@@ -5,12 +5,12 @@
 //abstract class and also since we did now include the area and perim methods
 //in the ShapeBase which is the highest in the hierarchy then we do not need 
 //to also implement the SHape interface within the rectangle and the circle class!
-class ShapeBase {
+class ShapeBase2 {
     constructor(name) {
         this.name = name;
     }
 }
-class Rectangle extends ShapeBase {
+class Rectangle5 extends ShapeBase2 {
     constructor(name, height, width) {
         super(name);
         this.height = height;
@@ -23,7 +23,7 @@ class Rectangle extends ShapeBase {
         return 2 * (this.height + this.width);
     }
 }
-class Circle extends ShapeBase {
+class Circle2 extends ShapeBase2 {
     constructor(name, radius) {
         super(name);
         this.radius = radius;
@@ -35,22 +35,22 @@ class Circle extends ShapeBase {
         return 2 * (22 / 7) * this.radius;
     }
 }
-function printStats(obj) {
+function printStats3(obj) {
     console.log('Name = ', obj.name);
     //let objAsShape = (obj as unknown) as Shape;
     console.log("Area = ", obj.area());
     console.log("Perimiter = ", obj.perimeter());
 }
-let box = new Rectangle("rectangle", 10, 11);
+let box3 = new Rectangle5("rectangle", 10, 11);
 /*
 console.log("Area = ", box.area())
 console.log("Perimiter = ", box.perimeter())
 */
-printStats(box);
-let circle = new Circle("circle", 12);
+printStats3(box3);
+let circle3 = new Circle2("circle", 12);
 /*
 console.log("Area = ", circle.area())
 console.log("Perimiter = ", circle.perimeter())
 */
-printStats(circle);
+printStats(circle3);
 //let sb : ShapeBase = new ShapeBase()

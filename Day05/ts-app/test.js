@@ -526,37 +526,35 @@ class MyList {
     group(keySelectorFn) {
         //here it would be the same type T since we return the same number of properties
         //so there is no need to create a new type of TResult! 
+        //here we are sending back a string such as book title of Angular when we call
+        //the keySelectorFn! 
         let result = new MyList();
         let map = {};
         for (var i = 0; i < this.collection.length; i++) {
-            console.log('Key selector function return -> ', keySelectorFn(this.collection[i]));
+            //console.log('Key selector function return -> ', keySelectorFn(this.collection[i]))
             var item = this.collection[i], key = keySelectorFn(item);
-            console.log("Item: ", item, 'is typeof ', typeof key);
-            console.log("Key: ", key);
-            if (!(key in this.collection)) {
-                console.log('Key in the collection boolean: ', key in this.collection);
-                console.log('item at each check for a non existing key: ', item);
-                console.log("Key in collection: ", key);
-                console.log(result);
-                console.log(result.collection.map);
+            //item is an obj and key is a string
+            //console.log("Item: ", item, 'is typeof ', typeof item)
+            //console.log("Key: ", key)
+            //console.log("Before checking if the key exists: ", map)
+            if (!(key in map)) {
+                //console.log(result.collection)
+                //console.log('Key in the collection boolean: ' ,key in this.collection)
+                // console.log('item at each check for a non existing key: ', item)
+                // console.log("Key in collection: ", key)
+                // console.log(result)
+                // console.log(result.collection.map)
                 map[key] = new Array;
-                console.log(map);
+                //console.log(map)
             }
-            console.log('item after the array and key is created: ', item);
+            //console.log('item after the array and key is created: ', item)
             map[key].push(item);
-            console.log('data pushed into each map: ', map);
-            // if (!(key in result)){
-            //     console.log(typeof result.collection)
-            //     console.log(typeof key)
-            //     result.collection[key] = [];
-            // }
-            // //this if statement above can be written as 
-            // //result[key] = result[key] || [];
-            // result.collection[key].push(item)
+            //console.log('data pushed into each map: ',map)
         }
+        //console.log('After the for loop: ',map)
         result.collection.push(map);
-        console.log('Result from group by: ', result);
-        console.log('Map within the collection in result: ', result.collection.map);
+        //console.log('Result from group by: ', result)
+        //console.log('Map within the collection in result: ', result.collection.map)
         return result;
     }
 }
@@ -588,15 +586,6 @@ books.add({ id: 4, title: 'Angular', isbn: '809038399', cost: 19.99 });
 console.log("Books Data: ", books);
 let cheapBooks = books.filter(book => book.cost < 50);
 console.log(cheapBooks.values);
-// let productsComparerByValue = function(p1: number, p2: number){
-//     var p1Value = p1.cost * p1.units,
-//         p2Value = p2.cost * p2.units;
-//     if (p1Value < p2Value) return -1;
-//     if (p1Value > p2Value) return 1;
-//     return 0;
-// }
-// sort(productsComparerByValue);
-// console.table(products)
 let discountedBooks = books.map(book => ({ title: book.title, cost: book.cost * 0.9 }));
 console.log("Discounted Books");
 console.log(discountedBooks);
@@ -607,5 +596,13 @@ let grouped = books.group(book => {
     //console.log('Grouped by: ', book.title)
     return book.title;
 });
-console.log(grouped);
-//console.log(books)
+let affordable = books.group(book => {
+    //console.log('Grouped by: ', book.title)
+    return book.cost > 50 ? 'affordable' : 'costly';
+});
+console.log(grouped.forEach(coll => {
+    console.log(coll);
+}));
+console.log(affordable.forEach(coll => {
+    console.log(coll);
+}));

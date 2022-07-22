@@ -1,0 +1,228 @@
+Angular 
+    a framework that allows us to build a RIA (rich internet application) 
+    single page application! 
+
+What does Angular provide us: 
+    - the following bulding blocks
+        > modules
+            - a logical grouping of components, directives, pipes, and services
+            - there has to be a minimum of one module in an application
+            - modules are the starting point of an application (bootstrap)
+
+        > components
+            - this represents One UI aspect (one view instance) of the application
+            - this encapsulates presentation (template) + UI interaction logic (behavior) + state
+                such as what should happen when a button is clicked
+            - An application is a composition of components 
+
+        > directives
+            - DOM manipulation logic 
+                ex: 
+                    you want to change the style of an element. This is a directive
+                    since to do this you need to do DOM manipulation using CSS
+
+                    also showing or hiding an element is a directive since you need
+                    to do some DOM manipulation to be able to show and hide the
+                    element with the display option
+
+            Types of directives:
+                1. Attribute directive
+                    Changes the attribute of an existing DOM node 
+                    Does not change the DOM structure
+                    Used with []
+                    Ex: ngClass, ngStyle
+
+                2. Structural directive
+                    Changes the DOM structure by either adding or removing DOM Nodes
+                    Used with * prefix
+                    ex: ngIf, ngSwitch, ngFor
+
+                    *ngIf="show"
+                    
+                    You can think of nodes as just the html tags that you create!
+                    Ex: <div></div> is a node in the dom! So this would mean that a Structural
+                    directive can create and remove a node such as a <div></div> and the things
+                    within that <div></div> tag
+
+
+        > pipes
+            - Data transformation logic for ONLY PRESENTATION
+                ex: If we wanted to transform the Date() format so that it is 
+                in dd/mm/yy format, we need to do this within the pipe!!
+            - Only used to change what is being displayed in the UI!
+
+        > services 
+            - represents any NON-UI responsibility of the application
+                ex: Validation, Business Logic, Logic for communicating with the 
+                server
+
+UI entities here are: components, directives, and pipes
+Non-UI entities: services
+
+Ex: Looking at VS code
+The toolBarIcon can be seen as a single components  
+- icon
+- Toggle () -> this is when the pane is opened and then the pane tree closes
+
+Now since they have the same behaviour in regards to generally what they
+do such as open some other screen, they all toggle, they all have similar 
+highligting white lines to show that you are currently on that tool. These
+similarities can be generalized so that all the toolbar icons can be within
+the same component so that this behavior does not need to be made again and 
+again for each tool but rather we can use a component to generalize the behaviour
+and then add the individual functionality to each based on their tool purpose! 
+
+similar behaviour == component
+
+
+ToolBar
+    ToolBarIcon
+    ToolBarIcon
+    ToolBarIcon
+
+
+Angular CLI: 
+    Back in the day you needed to set up the entire angular app yourself but now 
+    there is an angular CLI which can help you:
+        - tool to perform all development activities for an angular application
+        - it is an NPM package
+
+    Installing Angular CLI:
+        - npm install -g @angular/cli
+            -g means that you are installing it globally in our machine
+
+    To use yarn as the package manager instead of npm:
+        - npm install -g yarn (yarn is a faster package manager than npm)
+        - ng config -g cli.packageManager yarn
+    
+    To set up a new angular application:
+        - ng new <app-name>
+        - Would you like to add Angular routing? No for now
+        - What style sheet format would you like to use? CSS for now
+
+
+Package.json
+    - Manifest file for any javascript project
+    - contains meta-data information about the project
+        name
+        version
+        author
+        description
+        keywords 
+        repository
+        license
+        scripts
+        dependencies
+            dependencies that are needed for the project to run
+            these will be needed to run our application in the browser once it is
+                deployed
+
+        devDependencies
+            dependencies that are needed for performing development activities
+                ex: development web server to run things on the browser locally
+                    test runner
+                    unit testing framework
+                    typescript compiler 
+
+            these dependencies will NOT be a part of the application build 
+
+            Jasmine dev dependency is simial to that as Jest to perform unit testing
+            Karma dev dependency is a test runner in which you can use it to run   
+                tests across multiple browsers and not just one like Chrome
+                > karma.conf.js is the config file for Karma
+                by deafault karma is configured with chrome! But we can change
+                that in the config file for karma to run the testing in some other 
+                browser such as firefox which will require you to install some 
+                other package to run it on firefox as well 
+
+
+            angular.json (this is our application config file)
+                - this is the config file for your angular application which 
+                entails all the setting about the angular app
+
+            src file
+                - this is where the angular app is located with all of the files
+                needed for the angular application
+
+            npm run start
+                - will start a local web server to where you can see the app
+
+                in the package.json file 
+                - "start": "ng serve -o",
+                adding -o will automatically start the local server and open the 
+                broswer at that localhost endpoint
+
+            index.html
+                - within the index file in the src directory, we see that none
+                of the stuff that we see at the localhost page is in this index
+                file! So how are things getting generated into the web page we 
+                see at the welcome angular page?
+
+                Even when looking at the page source we see that none of that 
+                stuff is in there but we do see that there is something else 
+                in the page source that we do not see in the index.html file!
+                this is the script tag with some js code! When we run the build 
+                with ng what happens is that ng will compile the ts files into js 
+                files and add them into the index.html file so that when the 
+                localhost is running, we are able to see all of those Angular welcome
+                page components! 
+
+                However even then that is only JS code compiled from TS, where is the
+                html code coming from? 
+                What happens is that the index page that is sent from the server is 
+                that simple index page with an empty <app-root>, however in the 
+                broswer we see that there are divs and html in the app-root within the
+                broswer inspect! This means that the JS code is one that is inserting
+                the html into that app-root within the index.html file!  
+
+                So we are dynamically inserting html into the app-root through the use
+                of the JS code that is compiled from the TS code! 
+
+
+            Where does our application begin at?
+                - it begins at the main.ts file! 
+
+            In the main.ts:
+
+                platformBrowserDynamic().bootstrapModule(AppModule)
+                .catch(err => console.error(err));
+                    > this is where we are initializing an application called AppModule
+                    which goes back to the idea that we need at least one module
+                    within an angular application
+
+            Now within Angular, a module, a component, a pipe, etc.. are all 
+            classes! Now how does it differentiate between these if they are all
+            classes? Angular uses a Decorator inorder to make this differentiation
+
+            So if you have a class with a NgModule Decorator, Angular will treat 
+            that as a Module. 
+            
+            If a class has a Component Decorator, Angular will treat that as a 
+            component.
+            Etc..
+
+            All of these Decorators are defined within the Angular Core! Look at 
+            the Angular docs to learn more about each of these Decorators
+
+            @NgModule({
+                declarations: [
+                    AppComponent
+                ],
+                imports: [
+                    BrowserModule
+                ],
+                providers: [],
+                bootstrap: [AppComponent]
+                })
+                export class AppModule { }
+
+            Note: Here there is no ; after the bootstrap [] }) and that is because
+            this is not an independent statement but rather a Decorator for the 
+            class AppModule { }  !!!!
+
+
+            Here we are passing an object to the NgModule! Here we are passing 
+            declarations, imports, providers, bootstrap
+
+
+
