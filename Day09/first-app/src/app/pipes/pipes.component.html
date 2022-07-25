@@ -1,17 +1,18 @@
 <h3>Pipes</h3>
 <h4>Currency Converter</h4>
 <label for="">Currency In $:</label>
-<input type="number">
-<select name="" id="">
-    <option value=""></option>
-    <option value="">US Dollar</option>
-    <option value="">Euro</option>
-    <option value="">Indian Rupee</option>
-    <option value="">Japanese Yen</option>
-    <option value="">Chinese Yuan</option>
-    <option value="">British Pounds</option>
+<input type="number" #curInput (input)="currencyInput = $any($event.target).valueAsNumber">
+<select name="" id="" #curSelect (input)="currencySelect = curSelect.value; currencyChange(currencySelect)">
+    <!-- <option value=""></option> -->
+    <option value="USD">US Dollar</option>
+    <option value="EUR">Euro</option>
+    <option value="INR">Indian Rupee</option>
+    <option value="JPY">Japanese Yen</option>
+    <option value="CNY">Chinese Yuan</option>
+    <option value="GBP">British Pounds</option>
 </select>
-<div>{{100 | currency:'EUR'}}</div>
+{{currencySelect}}
+<div>{{ convertedValue | currency: currencySelect }}</div>
 
 <!-- Here we are using the CurrencyPipe in Angular API, so angular
 will automatically read this: {{100 | currency}} and convert this 
@@ -33,7 +34,7 @@ ex: {{100 | currency:'EUR'}} will display the 100 in eruos-->
 <h4>Slice Pipe</h4>
 <h5>Products</h5>
 <label for="">Page Size :</label>
-<select name="" id="" #paginationBy (input)="pageBy = paginationBy.value">
+<select name="" id="" #paginationBy (input)="pageBy = paginationBy.value; goToBeginning()">
     <option value="5">5</option>x
     <option value="10">10</option>
     <option value="15">15</option>
