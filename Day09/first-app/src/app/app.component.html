@@ -36,7 +36,7 @@ on the page!! -->
 <button (click)=" userChoice ='Calculator'">Calculator</button>
 <button (click)=" userChoice ='Calculator2'">Calculator-2</button>
 <button (click)=" userChoice ='Products'">Products</button>
-<button (click)=" userChoice ='Pipes'">Pipes</button>
+<!-- <button (click)=" userChoice ='Pipes'">Pipes</button> -->
 <button (click)=" userChoice ='SalaryCalculator'">SalaryCalculator</button>
 <!-- In this manner what we are doing is simply giving the userChoice a value and when 
 we click a different value we override the original value with another value based on which button
@@ -63,7 +63,7 @@ organized since we use the swith case here!  -->
   <app-calculator *ngSwitchCase="'Calculator'"></app-calculator>
   <app-calculator2 *ngSwitchCase="'Calculator2'"></app-calculator2>
   <app-products *ngSwitchCase="'Products'"></app-products>
-  <app-pipes *ngSwitchCase="'Pipes'"></app-pipes>
+  <!-- <app-pipes *ngSwitchCase="'Pipes'"></app-pipes> -->
   <app-salary-calculator *ngSwitchCase="'SalaryCalculator'"></app-salary-calculator>
   <div *ngSwitchDefault>Make a choice:</div>
 </div>
@@ -77,3 +77,4 @@ which again goes on that idea that the state is what is managing what is being
 displayed in the UI and NOT the UI having any state management or logic for what
 is being used to display things on the UI! -->
 
+<app-pipes></app-pipes>
