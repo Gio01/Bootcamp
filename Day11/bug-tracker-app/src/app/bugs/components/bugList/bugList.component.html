@@ -1,0 +1,22 @@
+<section class="list" >
+    <ol>
+        <li *ngFor="let el of data | sort:sortAttrName:sortDesc" >
+          <!-- Here we use the {{el | json}} instead of el.bug so that we can get a string
+          of the entire json object so that we can see the entire data!  -->
+            <span class="bugname"
+            (click)="callToggle.emit(el)"
+            [ngClass]="{ closed: el.isClosed }" >
+            {{el.bugName | trimText:10 }}</span>
+            <small>[{{el.bugId}}]</small>
+            <div class="datetime">[{{el.createdAt | createdAt}}]</div>
+            <button (click)="toRemove.emit(el)">Remove</button>
+        </li>
+        <!-- <li>
+            <span class="bugname closed">[This is bug - 2]</span>
+            <div class="datetime">[createdAt]</div>
+            <button>Remove</button>
+        </li> -->
+    </ol>
+    <button (click)="toRemoveAll.emit()">Remove Closed</button>
+    
+  </section>

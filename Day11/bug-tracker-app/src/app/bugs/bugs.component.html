@@ -1,35 +1,48 @@
-<h1>Bug Tracker</h1>
+<!-- BugStats Component -->
+<!-- <h1>Bug Tracker</h1>
 <hr>
 <section class="stats">
-  <!-- Here what we are doing is simply passing the entire bugs array into the
+  </!-- Here what we are doing is simply passing the entire bugs array into the
   closedCount pipe so that it can handle that presentation for us! -->
-  <span class="closed" >{{bugs | closedCount}}</span>
+  <!-- <span class="closed" >{{bugs | closedCount}}</span>
   <span> / </span>
   <span>{{bugs.length}}</span>
-</section>
-<section class="sort"><label for="">Order By :</label>
+</section> --> 
+
+<app-bug-stats [data]="bugs"></app-bug-stats>
+
+<!-- BugSort Component-->
+ <!-- <section class="sort"><label for="">Order By :</label>
   <select name="" id="" (change)="sortAttr = $any($event.target).value">
       <option value="">---Select---</option>
       <option value="bugId">Id</option>
       <option value="bugName">Name</option>
       <option value="isClosed">Status</option>
       <option value="createdAt">Created</option>
-  </select>
-
-  <label for="">Descending ? :</label>
+  </select>  
+ <label for="">Descending ? :</label>
   <input type="checkbox" name="" id="" (change)="sortDsc = $any($event.target).checked">
 </section>
-<section class="edit">
-  <label for="">Bug Name :</label>
-  <input type="text" name="" id="" #bugInput>
-  <button (click)="add(bugInput.value)">Add New</button>
-</section>
 
-<section class="list" >
+-->
+
+<app-bug-sort (toSortAttr)="sortAttr = $event" (toSortDesc)="sortDsc=$event"></app-bug-sort> 
+
+<!-- BugEdit Component -->
+<!-- <section class="edit">
+  <label for="">Bug Name :</label>
+  <input type="text" name="" id="" (input)="newBugName = $any($event.target).value">
+  <button (click)="add()">Add New</button>
+</section> -->
+
+<app-bug-edit (bugAdded)="onNewBugAdded($event)"></app-bug-edit>
+
+<!-- BugList Component -->
+<!-- <section class="list" >
   <ol>
       <li *ngFor="let el of bugs | sort:sortAttr:sortDsc" >
-        <!-- Here we use the {{el | json}} instead of el.bug so that we can get a string
-        of the entire json object so that we can see the entire data!  -->
+        <!/-- Here we use the {{el | json}} instead of el.bug so that we can get a string
+        of the entire json object so that we can see the entire data!  --/>
           <span class="bugname"
           (click)="onToggle(el)"
           [ngClass]="{ closed: el.isClosed }" >
@@ -38,12 +51,15 @@
           <div class="datetime">[{{el.createdAt | createdAt}}]</div>
           <button (click)="onRemove(el)">Remove</button>
       </li>
-      <!-- <li>
+      <!/-- <li>
           <span class="bugname closed">[This is bug - 2]</span>
           <div class="datetime">[createdAt]</div>
           <button>Remove</button>
-      </li> -->
+      </li> --/>
   </ol>
   <button (click)="onRemoveClosed()">Remove Closed</button>
   
 </section>
+  -->
+<app-bug-list [data]="bugs" [sortAttrName]="sortAttr" [sortDesc]="sortDsc"
+(callToggle)="onToggle($event)" (toRemove)="onRemove($event)" (toRemoveAll)="onRemoveClosed()"></app-bug-list> 

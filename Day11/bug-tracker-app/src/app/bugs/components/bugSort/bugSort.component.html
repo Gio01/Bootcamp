@@ -1,0 +1,12 @@
+<section class="sort"><label for="">Order By :</label>
+    <select name="" id="" (change)="toSortAttr.emit($any($event.target).value)">
+        {{sortAttr}}
+        <option value="">---Select---</option>
+        <option value="bugId">Id</option>
+        <option value="bugName">Name</option>
+        <option value="isClosed">Status</option>
+        <option value="createdAt">Created</option>
+    </select> 
+    <label for="">Descending ? :</label>
+  <input type="checkbox" name="" id="" (change)="toSortDesc.emit($any($event.target).checked)">
+</section>

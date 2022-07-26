@@ -1,0 +1,16 @@
+<h1>Bug Tracker</h1>
+<hr>
+<section class="stats">
+  <!-- Here what we are doing is simply passing the entire bugs array into the
+  closedCount pipe so that it can handle that presentation for us! -->
+  <span class="closed" >{{data | closedCount}}</span>
+  <span> / </span>
+  <span>{{data.length}}</span>
+</section>
+<!-- 
+    Ex: <app-bug-stats [data]='bugs'> </app-bug-stats>
+    
+    Here data refers to the data in this child component and we are passing
+    the data array from the parent component where the array is called bugs
+    and then we equal/pass that data into this file's array called data!
+ -->

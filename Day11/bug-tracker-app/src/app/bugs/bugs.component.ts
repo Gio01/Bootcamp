@@ -3,6 +3,7 @@ import { Bug } from "./models/bug-type-object";
 import { BugOperationsService } from "./services/bugOperation.service";
 import * as moment from "moment";
 
+
 @Component({
     selector: 'app-bug-tracker',
     templateUrl: './bugs.component.html',
@@ -24,16 +25,17 @@ export class BugTrackerComponent{
        //manipulations!
     }
 
-    add(newBugName: string){
-        const newBug = this.bugOperations.add(newBugName);
+    // add(newBugName: string){
+    //     const newBug = this.bugOperations.add(newBugName); //we do not need this anymore 
+    //as we are doing that now with the bugEdit component! 
     
-        //this.bugs.push(newBug);//here is just so that we also have it within
-        //the browser at the moment before refresh! After the refresh we will
-        //call the storage again and get all the data from there!
-        this.bugs = [...this.bugs, newBug]//creates a new array with all of the 
-        //previous elements in the this.bugs array! (the current instance on the browser
-        //before any reload happens!)
-    }
+    //     //this.bugs.push(newBug);//here is just so that we also have it within
+    //     //the browser at the moment before refresh! After the refresh we will
+    //     //call the storage again and get all the data from there!
+    //     this.bugs = [...this.bugs, newBug]//creates a new array with all of the 
+    //     //previous elements in the this.bugs array! (the current instance on the browser
+    //     //before any reload happens!)
+    // }
 
     // removedCount(): number{
     //     //the prob with this is that filter creates another array!
@@ -46,6 +48,16 @@ export class BugTrackerComponent{
         
     //     return this.bugs.reduce((result, bug) => bug.isClosed ? result + 1 : result, 0)
     // }
+
+    recieveSortAttr(attr: string){
+        this.sortAttr = attr;
+        this.bugs = [...this.bugs];
+        this.sortDsc = false;
+    }
+
+    onNewBugAdded(newBug: Bug){
+        this.bugs = [...this.bugs, newBug]
+    }
 
     onRemove(bugToRemove : Bug){
         //here we are removing on elememnt obj from the bug array
@@ -63,6 +75,7 @@ export class BugTrackerComponent{
         // elements as this.bugs! The reason why we do this is so that the sort()
         //can be triggered by seeing that there is a change in the array!
         console.log(this.bugs)
+        //console.log(bugToToggle)
 
         const toggledBug = this.bugOperations.toggle(bugToToggle);
         this.bugs = this.bugs.map(bug => bug.bugId === bugToToggle.bugId ? toggledBug: bug );

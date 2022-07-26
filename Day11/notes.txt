@@ -17,3 +17,20 @@ Create a new angular app (bug-tracker-app)
         14. Implement 'Authentication'
         15. Write test cases
         16. Package & Deploy
+
+
+Refactoring the trimText, sort & elapses/createdAt pipes into a module
+where a module is a grouping of entities such as components, pipes, services, directive'
+
+src/app
+    /util
+        utils.module.ts (Define the Utils module)
+            /pipes
+                trimText.pipe.ts (Define the TrimTextPipe)
+                sort.pipe.ts (Define the SortPipe)
+                elapsed.pipe.ts (Define the ElapsedPipe)
+
+            Register the pipes in the utils module
+
+    Import the utils module in the app module
+        Use the pipes from the utils module
