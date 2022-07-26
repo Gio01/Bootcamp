@@ -4,12 +4,18 @@ import { SalaryCalculatorModel } from "./salarycalculator.model";
 @Component({
     selector: 'app-salary-calculator',
     templateUrl: './salarycalculator.component.html',
-    styleUrls: ['./salarycalculator.component.css']
+    styleUrls: ['./salarycalculator.component.css'],
+    providers: [
+        SalaryCalculatorModel//each component instance will get its own 
+        //instance of the model so each component will have its own 
+        //state!!
+    ]
 })
 export class SalaryCalculatorComponent{
     
-    model : SalaryCalculatorModel = new SalaryCalculatorModel();
-
+    // model : SalaryCalculatorModel = new SalaryCalculatorModel();
+    //since we have added the model as a service in the providers of the
+    //app.module file, we can simply call it from the constructor instead! 
     
     /**
      * Now we should not have the calculating logic within here as the calculator
@@ -21,4 +27,16 @@ export class SalaryCalculatorComponent{
      * So here the calculate() and everything should be moved into a model
      * class that we can create in the same directory!
      */
+
+    // model: SalaryCalculatorModel; //here we declare a model of type SalaryCalculatorModel
+    // constructor(model: SalaryCalculatorModel){
+    //     this.model = model;
+    // }
+
+    //This below is the same as the above except now we do not explicitely
+    //type it in the manner like the one above!
+    constructor(public model: SalaryCalculatorModel){
+
+    }
+
 }

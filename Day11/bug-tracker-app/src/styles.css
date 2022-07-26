@@ -1,0 +1,9 @@
+/* You can add global styles to this file, and also import other style files
+
+Here we should include any styles that we want the entire application/all components
+to have 
+*/
+
+body{
+    margin-left: 50px;
+}

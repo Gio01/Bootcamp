@@ -1,3 +1,9 @@
+import { Injectable } from "@angular/core";
+
+@Injectable({
+    providedIn: 'root'
+})//this will inject the model within the app-root! so the entire app will have
+//access to this model! 
 export class SalaryCalculatorModel {
     basic : number = 0;
     hra : number = 0;
