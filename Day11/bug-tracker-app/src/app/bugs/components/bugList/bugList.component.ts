@@ -18,9 +18,9 @@ export class BugListComponent{
     @Input()
     sortDesc: boolean = false;
 
-    constructor(private parentComponent: BugTrackerComponent){
+    // constructor(private parentComponent: BugTrackerComponent){
 
-    }
+    // }
 
     @Output()
     public callToggle: EventEmitter<Bug> = new EventEmitter<Bug>();

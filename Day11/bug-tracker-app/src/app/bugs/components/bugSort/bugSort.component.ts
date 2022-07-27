@@ -18,4 +18,16 @@ export class BugSortComponent {
     public toSortDesc: EventEmitter<boolean> = new EventEmitter<boolean>();
 
 
+
+    /**
+     * Another manner in which we could have done it was to pass in the attrName from the
+     * UI in thi sub component and then pass that as a template varible onto some methods 
+     * we define here! 
+     * 
+     * Ex: select (change)="onSortOrder($any$(event).value)"
+     * 
+     * onSortAttrChange(sortAttr: string){
+     *  
+     * }
+     */
 }
