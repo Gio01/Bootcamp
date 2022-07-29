@@ -1,0 +1,73 @@
+Observable 
+
+Observable = inverse of Enumerable 
+    Enumerable (generator in JS) -> is a lazy iterable 
+
+lazy processing/evaliation is that of processing information only as you need it 
+and you do not need to process all of the information in one go as this can 
+be inefficient if you have some criteria to meet and the first 300 elements
+meet that criteria! If we used a regular for loop we still need to process all
+1000 elements which is not efficient since we should have stopped at the 300 elements
+since those 300 met the criteria already!
+
+In JS we can use generators to do this lazy processing and not allow for processing
+to continue when some condition has been met! 
+
+Now here lazy iteration works when we have all the data already but how can we do this 
+when we do not have the data yet and we need to wait in order to then start the generator
+process! 
+
+
+To use the inbuilt HttpClient Api in Angular:
+
+
+
+Browser (Asynchronous) 
+    1. Ajax (Asynchronous JavaScript and XML) (single)
+    2. WebSockets (sequence)
+        - 
+    3. Server Sent Events (sequence)
+        - ex: the server is sending data to the client once there is a change in data 
+        in the server! This can be something like the score of a baseball game so that the
+        server can send data to the user upon a score happening rather than the user 
+        always needing to make a request to the server in order to get score updates! 
+        - How can this be done? -> the server will send streams of data to the user in 
+        chunks! The user makes a request with the user and the connection is kept open
+        with the server and the server feeds realtime updates to the user by giving chunks
+        of the data to the user!! 
+        - This only became available in HTML5 where they created HTTP to allow this sort 
+        of open connection from client to the server to the the server can keep on giving
+        chunked data to the user!
+        - You are still using HTTP but now you need to send some headers with the data that 
+        you are sending out in order to keep a streaming connection open! 
+            Server:
+                HTTP Headers:
+                > content-type : text/event-stream 
+                > connection: keep-alive
+                    > the user also needs to keep the connection open for a while in order to 
+                    keep the connection going and the user can keep recieving data! 
+                
+                event:<event-name>\n
+                data:<data>\n\n 
+
+            Browser Client:
+                EventSource
+                
+
+            
+    5. Timer Events (setInterval, setTimeout) (sequence)
+    4. User Events (sequence)
+
+
+HTTP Protocol
+    - it is a stateless protocol 
+        > this is because when we make requests to the server we establish a new connection
+        with the server on each request that we want. Vs. A stateful process is that of 
+        when we connect to the server via some script and where we can send many requests 
+        within a single established connection. 
+            > recall what we had done in DB at depauw in java where we could have the 
+            connection to the database for a while to perform various requests!! 
+
+    
+
+    

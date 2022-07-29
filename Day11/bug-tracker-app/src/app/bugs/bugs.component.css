@@ -4,7 +4,7 @@ body{
 section{
     margin-bottom: 10px;
 }
-.stats, .bugname {
+.stats, .name {
     font-size: 18pt;
 }
 .closed {
@@ -26,6 +26,6 @@ li{
     border-radius: 10px;
     background-color: #e7e7e7;
 }
-.bugname{
+.name{
     cursor: pointer;
 }

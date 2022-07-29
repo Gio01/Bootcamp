@@ -1,0 +1,26 @@
+Synchronous vs. Asynchronous Operation
+
+Synchronous
+    An operation that is initiated and waited for until it completes
+
+Asynchronous
+    An operation that is initiated but NOT waited for until it completes
+
+Now in JS there is not a manner in which we can use threading so that 
+we can perform Asynchronous functions/operations! Meaning that we need to 
+simulate this use of threading for different operations in JS!
+
+- We can use callbacks to basically have that function print out the values
+once some calculations have been done! 
+    1. do some calculations -> put it in a var -> pass that var into a callbacks
+
+- Now there are delagation issues with callbacks! Meaning that not other functions
+are able to use these callbacks! Only the single method that contains that callback
+is able to use this ! 1 to 1! But what if we want other functions to be able to 
+call that callback aswell!? 
+
+- We can use the promise API in order to create an object by which we can use
+to delegate(generically) to other functions to be able to return things 
+Asynchronous to multiple requesters/functions! 
+
+

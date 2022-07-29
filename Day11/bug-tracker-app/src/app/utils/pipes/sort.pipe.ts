@@ -55,12 +55,12 @@ export class SortPipe<T, K extends keyof T> implements PipeTransform{
     //     console.log(this.bugs)
     //     console.log(this.descending)
     //     this.bugs.sort((a, b): any => {
-    //         if(sortby === 'bugName'){
-    //             console.log(sortBugs.comparer(a,b, 'bugName', dsc))
-    //            return sortBugs.comparer(a,b, 'bugName', dsc)
+    //         if(sortby === 'name'){
+    //             console.log(sortBugs.comparer(a,b, 'name', dsc))
+    //            return sortBugs.comparer(a,b, 'name', dsc)
     //         }
-    //         else if(sortby === 'bugId'){
-    //             return sortBugs.comparer(a,b,'bugId', dsc)
+    //         else if(sortby === 'id'){
+    //             return sortBugs.comparer(a,b,'id', dsc)
     //         }
     //         else if(sortby === 'isClosed'){
     //             return sortBugs.comparer(a,b,'isClosed', dsc)
@@ -116,7 +116,7 @@ export class SortPipe<T, K extends keyof T> implements PipeTransform{
      * 
      * NOTE: in old Angular, that way things works is that when ever there is
      * some user interaction
-     * in the UI, Angular will reload all of the templates such as {{el.bugId}}
+     * in the UI, Angular will reload all of the templates such as {{el.id}}
      * however that also means that whenever something unrelated to the sort()
      * is happening, Angular will re run everything including sort() and this 
      * means that there are performance issues since an unrelated event will

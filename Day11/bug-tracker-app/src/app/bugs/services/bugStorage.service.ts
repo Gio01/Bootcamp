@@ -6,7 +6,7 @@ import { Bug } from "../models/bug-type-object";
 })
 export class BugStorageService{
     private storage: Storage = window.localStorage;
-    private _currentBugId : number = 0;
+    private _currentid : number = 0;
 
     getAll() : Array<Bug> {
 
@@ -19,7 +19,7 @@ export class BugStorageService{
                 let rawStr = this.storage.getItem(key);
                 if (rawStr !== null){
                     let bug = JSON.parse(rawStr) 
-                    this._currentBugId = this._currentBugId > bug.bugId ? this._currentBugId : bug.bugId;
+                    this._currentid = this._currentid > bug.id ? this._currentid : bug.id;
                     bugs.push(bug)
                 }
                 //since JSON.parse(rawStr) gives us an error because it can be
@@ -31,15 +31,15 @@ export class BugStorageService{
     }
 
     remove(bug: Bug){
-        this.storage.removeItem(`bug-${bug.bugId}`)
+        this.storage.removeItem(`bug-${bug.id}`)
     }
 
     save(bug: Bug){
-        if(bug.bugId === 0){
+        if(bug.id === 0){
             //if it is 0 then it is a new bug as 0 is the default value we gave
             //to the Bug objects!
-            bug.bugId = ++this._currentBugId; 
+            bug.id = ++this._currentid; 
         }
-        this.storage.setItem(`bug-${bug.bugId}`, JSON.stringify(bug))
+        this.storage.setItem(`bug-${bug.id}`, JSON.stringify(bug))
     }
 }

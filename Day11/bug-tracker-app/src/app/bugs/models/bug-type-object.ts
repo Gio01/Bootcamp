@@ -1,6 +1,6 @@
 export interface Bug {
-    bugId: number,
-    bugName:string,
+    id: number,
+    name:string,
     isClosed:boolean,
     createdAt: Date
 }

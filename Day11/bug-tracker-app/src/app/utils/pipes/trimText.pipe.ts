@@ -35,7 +35,7 @@ export class TrimTextPipe implements PipeTransform{
  * = 40 creates a default value if a value is not sent from the UI!
  * 
  * Now in the UI how can we pass another arg to then get it within this pipe?
- *  {{bugName | trimText:30 :_ :_}}
+ *  {{name | trimText:30 :_ :_}}
  * the first arg is before the | and then any other argument is passed after the
  * pipename: !! so here the 30 will be the second arg for the maxLength!!
  * Every other arg then also passed with another : and the arg _ you want

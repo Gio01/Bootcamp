@@ -1,28 +1,24 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import {HttpClientModule} from '@angular/common/http'
 import { AppComponent } from './app.component';
 import { BugTrackerComponent } from './bugs/bugs.component';
-import { BugEditComponent } from './bugs/components/bugEdit/bugEdit.component';
-import { BugListComponent } from './bugs/components/bugList/bugList.component';
-import { BugSortComponent } from './bugs/components/bugSort/bugSort.component';
-import { BugStatsComponent } from './bugs/components/bugStats/bugStats.component';
+import { BugsComponentsModule } from './bugs/modules/bugComponents.module';
+
 import { ClosedCountPipe } from './bugs/pipes/closedCount.pipe';
 import { UtilsModule } from './utils/utils.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    BugTrackerComponent,
-    ClosedCountPipe,
-    BugStatsComponent,
-    BugSortComponent,
-    BugEditComponent,
-    BugListComponent
+    // BugTrackerComponent,
+    // ClosedCountPipe,
   ],
   imports: [
     BrowserModule,
-    UtilsModule
+    // UtilsModule,
+    BugsComponentsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

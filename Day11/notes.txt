@@ -34,3 +34,20 @@ src/app
 
     Import the utils module in the app module
         Use the pipes from the utils module
+
+
+
+For any data manipulation we should talk to the service and then for any 
+onbtaining data we should just ask the parent component to get that data for 
+presentation! 
+
+BugComponent addsNewBug -> service() -> updates the data in BugsComponent []
+
+where the service will have the methods such as addNewBug, toToggle, etc...
+
+This works because services are singleton meaning that they will only have a single
+instance and hence will have refernce to the original data array that we need to 
+manipulate and can then feed that data into the child components as they need it
+so that they can display the various things they need in the UI
+
+
