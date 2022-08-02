@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <script>
+        let curKeyTime;
+
+        function onTxtSearchKeyUp(evt){
+            clearTimeout(curKeyTime)
+            var searchTerm = document.getElementById('txtSearch').value
+            let inject = document.getElementById('divMessages').innerText = searchTerm;
+
+            curKetTime = setTimeout(searchTerm, 3000)
+            
+        }
+        
+        function onDocumentLoad(){
+            var txtSearch = document.getElementById('txtSearch');
+            txtSearch.addEventListener('keyup', onTxtSearchKeyUp);
+        }
+        window.addEventListener('load', onDocumentLoad);
+    </script>
+</head>
+<body>
+    <input type="text" name="" id="txtSearch">
+    <div id="divMessages"></div>
+</body>
+</html>
+<!-- Go over rxjs and look at what operators are available such as the scan, reduce,
+filter and etc... -->

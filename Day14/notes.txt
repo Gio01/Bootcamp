@@ -25,7 +25,14 @@ To use the inbuilt HttpClient Api in Angular:
 Browser (Asynchronous) 
     1. Ajax (Asynchronous JavaScript and XML) (single)
     2. WebSockets (sequence)
-        - 
+        - You can use these to do bidirectional communication with the client and the
+        server. Ex: a chat server/service! 
+        - Server Side (node.js)
+            > socket.io
+
+        - Browser
+            > WebSocket
+
     3. Server Sent Events (sequence)
         - ex: the server is sending data to the client once there is a change in data 
         in the server! This can be something like the score of a baseball game so that the
@@ -52,7 +59,12 @@ Browser (Asynchronous)
 
             Browser Client:
                 EventSource
-                
+        
+        - This is a one direction communication as the server is just feeding data to the user
+        once the connection has been established! The user is not sending other data to the server,
+        just waiting until data is given to the him/her from the server! 
+    
+
 
             
     5. Timer Events (setInterval, setTimeout) (sequence)
@@ -70,4 +82,3 @@ HTTP Protocol
 
     
 
-    

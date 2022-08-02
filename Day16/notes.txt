@@ -1,0 +1,8 @@
+Unicast
+	- Each created subscription to an Observable has its own context which means that if you are mid
+	running through one subscription, the other subscription will start from the beginning of that 
+	observable! Meaning that they are seperate from each other! They are not the same!  
+
+Subjects
+    - these are both an Observable and an Observable that can be used to take in a lot 
+    of inputs and be able to pass that data into different observables! 

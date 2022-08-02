@@ -1,0 +1,36 @@
+The observer pattern is a software design pattern where an object called the subject
+maintains a list of its dependents called observers and will notify them 
+automatically of state changes. 
+
+Observables are declarative which means that you define a function for publishing values,
+but it is not executed until you subscribe() to them! The subscribed consumer will then 
+recieve notifications until that function completes or the consumer unsubscribes()
+- An observable represents a stream of data that can arrive over time! It follows the 
+lazy evaluation (recall the use of next() where we call the next data only when it is 
+needed!)
+
+
+An Observable can deliver multiple values of any type such as literals, messages, or 
+events, depending on the context. 
+
+- regardless if the data you want is delivered Asynchronous or Synchronously, the manner 
+in which yyou recieve the values is the same, you just subscribe to an Observable and then 
+you unsubscribe when you are done! 
+
+- The the stream of data that is passed can be keystrokes, an HTTP response, or an interval
+timer
+
+- Observables are just functions that are able to give us streams of data!
+
+
+
+- Observables follow the push system (the most common push system in JS is that of 
+a promise!) 
+
+-An Observable is a lazily evaluated computation that can synchronously or asynchronously
+ return zero to (potentially) infinite values from the time it's invoked onwards.
+
+
+---------------------
+Operators: filer, scan, reduce, 
+
