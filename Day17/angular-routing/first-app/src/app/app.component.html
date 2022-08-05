@@ -1,0 +1,11 @@
+<h1>{{ title }} app is running!</h1>
+<button>Change Title</button>
+<hr/>
+<span *ngIf="loggedIn === true"> [ <a [routerLink]="['/spinner']">Spinner</a> ] </span>
+<span *ngIf="loggedIn === true"> [ <a [routerLink]="['/greeter']">Greeter</a> ] </span>
+<span *ngIf="loggedIn === true"> [ <a [routerLink]="['/products']">Products</a> ] </span>
+<span *ngIf="loggedIn === true"> [ <a [routerLink]="['/calculator']">Calculator</a> ] </span>
+<hr />
+
+
+<router-outlet></router-outlet>

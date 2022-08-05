@@ -1,0 +1,15 @@
+These are books that Magesh recommended for us:
+(This is for Software Engineers but it has some interesting things
+if I want to create things in the mind of a Software Engineer & there
+are always things that i can futher apply within my Security use case
+to create security based software using those same principles!)
+
+Agile Principles Patterns & Practices
+Growing Object Oriented Software Guided by Tests
+Head First Design Patterns
+Patterns of Enterprise Application Architecture
+Refactoring
+Refactoring to Patterns
+Domain Driven Design
+Domain-Driven Design By Example
+

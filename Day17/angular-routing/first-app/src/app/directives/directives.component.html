@@ -1,0 +1,70 @@
+<h3>Directives</h3>
+<hr>
+<h4>Conditional Styles</h4>
+
+<button (click)="applyStyle = true">Apply Style</button>
+<button (click)="applyStyle = false">Remove Style</button>
+
+<!-- Here we are using an object to change the CSS class dynamically because 
+we can pass a condition onto that CSS class so that we can have something like
+a boolean value to determine if a certain CSS class will be added to an 
+element or if it shall be removed! applyStyle here will change from true
+or false based on the button click and hence will change the text color
+based on whetehr the highlight class is changed to be true or false based 
+on which button was clicked!
+-->
+
+<div>
+    <label for="">Apply Style: </label>
+    <!-- We can use a change event to determine when the checkbox was checked! -->
+    <input type="checkbox" (change)="applyStyle = $any($event.target).checked">
+    <!-- .checked is an attribute which will return true or false based on 
+    whether it is that we have checked the checkbox or not! Based on that 
+    returned value we will assign that value to the ngClass object which will
+    then apply or remove the CSS style!  -->
+</div>
+
+<div>
+    <label for="">Show: </label>
+    <input type="checkbox" (change)="show = $any($event.target).checked">
+</div>
+<div
+    *ngIf="show; else noContent"
+    [ngClass]="{ highlight : applyStyle }">Do excepteur voluptate excepteur in. 
+    Voluptate quis est deserunt eu ex fugiat. Exercitation ex proident anim 
+    reprehenderit amet irure sunt mollit cupidatat et aliqua laborum magna quis. 
+    Magna minim officia anim est et deserunt.
+
+</div>
+<!-- Note: in the above div we have  *ngIf="show; else noContent" which will
+wither show the text in that div is show returns true, but if it false then 
+we will render the noContent node we created below in the ng-template tag
+
+*ngIf="show; else noContent"
+so the things before the ; needs to be true for it to occur, otherwise the 
+else will occur! 
+-->
+<ng-template #noContent>
+    No Content!
+</ng-template>
+<hr>
+
+<h4>Dynamically creating a list of items!</h4>
+<ul>
+    <li *ngFor="let productName of productNames">{{productName}}</li>
+    <!-- Here we create a variable: let productName which contains the
+    values of productNames which we defined in the component class!
+    Then we are able to directly use that created variable productName in the
+    templaye {{}} in order for the ngFor to run through the array of products
+    and display them onto the webpage!
+
+    It will display all of the elements within that array productNames we 
+    created in the directives component class ts file!!
+    -->
+    
+    <!-- What we want is to write the <li></li> component dynamically
+    so that we do not need to keep writing that for every Product Item -->
+    <!-- <li>pen</li>
+    <li>pencil</li>
+    <li>marker</li> -->
+</ul>

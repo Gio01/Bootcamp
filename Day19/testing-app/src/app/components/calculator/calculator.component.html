@@ -1,0 +1,10 @@
+<h3>Calculator</h3>
+<hr>
+<input type="number" id="txtN1" [(ngModel)]="n1">
+<input type="number" id="txtN2" [(ngModel)]="n2">
+<button (click)="onAddClick()" id="btnAdd">Add</button>
+<div id="divResult">{{result}}</div>
+<!-- Here we are using the formModule with the templating to get the form data!
+Recall that templatin is where we use the # vs the reactive forms is when we created
+the validations in the ts file and then applied that into the UI reactively! 
+ -->

@@ -1,0 +1,51 @@
+<section class="edit">
+  <form [formGroup]="newBugForm">
+    <!-- the ngForm is the angular manner of handling forms and the #newBugFormGroup
+    is a template tag that we can use to reference this form in the UI -->
+    <div>
+      <label for="">Bug Name :</label>
+     
+      <input type="text" name="bugName" formControlName="newBugName"> 
+
+      <span> [ {{newBugForm.get('newBugName')?.value?.length}} ] </span>
+   
+      <div class="error" *ngIf="(newBugForm.get('newBugName')?.touched || newBugForm.get('newBugName')?.dirty) && newBugForm.get('newBugName')?.errors?.['required']"> Bug name cannot be empty!</div>
+      
+      <div class="error"  *ngIf="newBugForm.get('newBugName')?.dirty && newBugForm.get('newBugName')?.errors?.['minlength']">Bug Name should be a minimum of 10 characters.</div>
+    
+      <!-- In doing we can take care of an empty input box (invalid), if the user tabbed out from the text box(touched), or if 
+      the user made some modification to the input box from the default empty text box (dirty) -->
+      <div>isValid: {{newBugForm.get('newBugName')?.valid}}</div>
+      <div>isInvalid: {{newBugForm.get('newBugName')?.invalid}}</div>
+      <div>touched: {{newBugForm.get('newBugName')?.touched}}</div>
+      <div>untouched: {{newBugForm.get('newBugName')?.untouched}}</div>
+      <!-- Touched is when you click/touched the input box but you do not need to
+      have entered anything! -->
+      <div>pristine: {{newBugForm.get('newBugName')?.pristine}}</div>
+      <!-- Pristine tells us if the user has not changed something = true -->
+      <div>dirty: {{newBugForm.get('newBugName')?.dirty}}</div>
+      <!-- Dirty tells us that the user has changed something = true -->
+      <div>{{newBugForm.get('newBugName')?.errors | json}}</div>
+      <!-- This .errors will tell us what is the error if inValid is false so here 
+      by doing this we can then see that the error is the  { "required": true } subce we 
+      are requiring that the user enters some input into the text box!-->
+
+  
+      <label for="">Description :</label>
+
+      <input type="text" name="bugDesc" formControlName="newBugDesc"> 
+<!-- 
+
+      <div class="error" *ngIf="newBugDesControl.dirty && newBugDesControl.errors?.['required']"> Bug description cannot be empty!</div>
+      <div class="error"  *ngIf="newBugDesControl.dirty && newBugDesControl.errors?.['minlength']">Bug description should be no less than 10 characters</div> -->
+     
+
+    </div>
+ 
+    <button (click)="onAddNew()" [disabled]="newBugForm.invalid">Add New</button>
+    <div>
+      <div>Values : {{newBugForm.value | json}}</div>
+      <div>Valid : {{newBugForm.valid}}</div>
+  </div>
+  </form>
+</section>

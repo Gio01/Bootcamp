@@ -1,0 +1,95 @@
+<div>
+    <h3>Calculator-1</h3>
+    <hr>
+
+    <input type="number" name="" id="" (input)="n1 = $any($event.target).valueAsNumber">
+    <input type="number" name="" id=""(input)="n2 = $any($event.target).valueAsNumber">
+
+    <!-- Now while we can use his $event manner, if we feel good to use the 
+        #txtInput1 (input)="n1 = txtInput1.valueAsNumber"
+        manner then just go ahead and use this over the others! Use whatever you feel is the 
+        best as there is no performance benefit from using one to another!
+
+        For me I will simply just use the one with the n1 = txtInput1.valueAsNumber
+        and in this manner I can simply just pass that to the state of the class component 
+        and can reference to the values using the this.
+
+        In that manner we add the values to the state and within the class we can then use those
+        given values to do whatever logic we need to do
+     -->
+
+    <!-- <input type="number" (input)="n1 = $any($event.target).valueAsNumber">
+    <input type="number" (input)="n2 = $any($event.target).valueAsNumber"> -->
+
+
+    <!-- Note: before what we were doing is using the template reference of txtInput1 and
+    then passing that into the event handler in the button control. Now here with the 
+    input event handler, we are passing the template reference value from the same controller
+    into the input event handler! However we should not need to do that since we are within
+    the same input controller tag! 
+
+    so instead of using that template reference to then pass the value to the input
+    event, we can directly get the event handler to give us that data since the event handler
+    has a target of where it points to:
+
+    input handler -> target: input tag -> gets the txtinput -> callsback to input event in the input tag
+
+    As you see this is a circular motion within the same input tag so instead we can use the 
+    event within the event handler of input and get the value from the target input tag to get the 
+    value of the user input that we want!!!
+
+    We can do that in Angular through using: $event
+
+    -->
+
+
+    <!-- <input type="number" name="" id="" #txtInput1 (input)="n1 = txtInput1.valueAsNumber">
+    <input type="number" name="" id="" #txtInput2 (input)="n2 = txtInput2.valueAsNumber"> -->
+    <!-- <input type="number" name="" id="" #txtInput1 (input)="n1 = txtInput1.value">
+    <input type="number" name="" id="" #txtInput2 (input)="n2 = txtInput2.value"> -->
+    <br>
+    <!-- So here the (input) is working as an event handleler which will
+    run whenever the user inputs some data into the text box! 
+    That is why when we input a number in the text box, we are able to see
+    it populate in teh {{n1}} and {{n2}} we created. 
+
+    Now we can then also use the input event handler to then get that value 
+    once inputed into a variable name and we can use that same variable name
+    within the calculator component class.
+
+    It is as if since the component class points to the template html component, 
+    it also knows what variables exists within this component html page 
+    and hence we can also reference those variables within the component 
+    class and now there is no need to keep passing the data into the params of
+    each of the methods in the button click event handler as we had done in the 
+    earlier version which I commented out below! 
+
+    NOTE: the n1 = txtInput1.value where txtInput1 is the template reference 
+    variabe that we had created in the input tag! 
+    -->
+    <div>
+        {{n1}}
+        <br>
+        {{n2}}
+    </div>
+    
+    <!-- <button (click)="onDummyClick($event)">Dummy</button> -->
+    <button (click)="add()">Add</button>
+    <button (click)="subtract()">Subtract</button>
+    <button (click)="multiply()">Multiply</button>
+    <button (click)="divide()">Divide</button>
+    <div>[{{result}}]</div>
+</div>
+<!-- <div>
+    <h3>Calculator-1</h3>
+    <hr>
+    <input type="number" name="" id="" #txtInput1 ">
+    <input type="number" name="" id="" #txtInput2 ">
+    <br>
+    
+    <button (click)="add(txtInput1.value, txtInput2.value)">Add</button>
+    <button (click)="subtract(txtInput1.value, txtInput2.value)">Subtract</button>
+    <button (click)="multiply(txtInput1.value, txtInput2.value)">Multiply</button>
+    <button (click)="divide(txtInput1.value, txtInput2.value)">Divide</button>
+    <div>[{{result}}]</div>
+</div> -->

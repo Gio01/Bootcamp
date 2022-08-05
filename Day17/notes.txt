@@ -1,0 +1,14 @@
+there is an issue with single page applications such as that of using Angular, the problem
+is that now we lose the ability to use Url Routing such as
+www.amazon.com/products/phones/iphone
+
+We cannot do this in Angular as it is a single page application! To do the same 
+we need to do:
+
+go to amazon.com
+click on products
+click on phones
+click on iphone
+
+So this is an issue with using something like Angular! So what is a way in which we 
+can fix this? 

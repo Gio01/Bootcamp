@@ -1,0 +1,39 @@
+<section class="edit">
+  <form #newBugFormGroup="ngForm">
+    <!-- the ngForm is the angular manner of handling forms and the #newBugFormGroup
+    is a template tag that we can use to reference this form in the UI -->
+    <div>
+      <label for="">Bug Name :</label>
+      <!-- <input type="text" name="" id="" (input)="newname = $any($event.target).value"> -->
+      <!-- <input type="text" (change)="newname = $any($event.target).value" (keydown.Tab)="keypressed = $any($event.target).value; tabOut(keypressed)"> -->
+      <input type="text" name="bugName" required minlength="10" [(ngModel)]="newname" #newBugNameControl="ngModel"> 
+      <!-- This required here ensures that the user inputs something and does not 
+      leave this field in the form empty!! -->
+      <span>[{{newname.length}}]</span>
+      <!-- <div class="error" *ngIf="tabbedOut === true"> Bug name cannot be empty!</div> -->
+      <div class="error" *ngIf="newBugNameControl.dirty && newBugNameControl.errors?.['required']"> Bug name cannot be empty!</div>
+      
+      <div class="error"  *ngIf="newBugNameControl.dirty && newBugNameControl.errors?.['minlength']">Bug Name should be a minimum of 10 characters.</div>
+    
+    </div>
+    {{keypressed}}
+    <div>
+      <label for="">Description :</label>
+      <!-- <input type="text" name="" id="" (change)="newDescription = $any($event.target).value" (keydown.Tab)="deskeypressed = $any($event.target).value; desTabOut(deskeypressed)"> -->
+      <input type="text" name="bugDesc"tion" #newBugDesControl="ngModel"> 
+      <!-- <div class="error" *ngIf="desTabbedOut === true"> Bug description cannot be empty!</div> required minlength="10" [(ngModel)]="newDescrip
+      <div class="error" *ngIf="shortDes === true">Bug description should be no less than 10 characters</div> -->
+
+      <div class="error" *ngIf="newBugDesControl.dirty && newBugDesControl.errors?.['required']"> Bug description cannot be empty!</div>
+      <div class="error"  *ngIf="newBugDesControl.dirty && newBugDesControl.errors?.['minlength']">Bug description should be no less than 10 characters</div>
+      {{deskeypressed}}
+
+    </div>
+  
+    <!-- <div>Values: {{newBugFormGroup.value | json}}</div>
+    <div>Valid: {{newBugFormGroup.valid}}</div> -->
+    <button (click)="onAddNew()" [disabled]="!newBugFormGroup.valid">Add New</button>
+    <!-- So now what we are doing here is that based on whether the form is valid we
+    will then and only then allow the user to be able to click on the Add New Button! -->
+  </form>
+</section>

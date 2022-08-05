@@ -1,0 +1,8 @@
+<div>
+    <input type="text" id="username" #userName (input)="username = userName.value">
+    <!-- <input type="text" name="" id="txtUserName" [(ngModel)]="userName">
+    we could have also done it this way with the use of formsModule!! -->
+    <button (click)="onClick()" id="clickButton"></button>
+</div>
+
+<div id="message">{{message}}</div>

@@ -1,0 +1,18 @@
+<div>
+    <h3>Greeter</h3>
+    <hr>
+    <label for="">User Name :</label>
+    <input type="text" #txtUserName> 
+    <button (click)="showMessage(txtUserName.value)">Greet</button>
+    <div>[ {{ message }} ]</div>
+</div>
+
+<!-- Now we would want to get access to the user input! We can create a 
+template refernce variable called #txtUserName to get that value and store
+it into that variable!
+
+However #txtUserName is not accessible within the component class, only within 
+this component template (html)! So we need to pass the #txtUserName as an 
+arg to the showMessage method to then have access to that data in the 
+component class!! 
+-->

@@ -1,0 +1,73 @@
+import { GreeterService } from "./greeter.service";
+import { DatetimeService } from './datetime.service';
+
+describe('Greeter Service', () => {
+  let greeterService : GreeterService;
+  let datetimeService : DatetimeService;
+  beforeEach(() => {
+     /* datetimeService = {
+      getCurrent() : Date {
+        return new Date();
+      }
+    } */
+    datetimeService = new DatetimeService();
+    greeterService = new GreeterService(datetimeService);
+  });
+
+  it('should greet the user with Good Morning when greeted before 12', () => {
+    //Arrange
+    const morningDate = new Date(2022,7,4,9,0,0);
+    spyOn(datetimeService, 'getCurrent').and.returnValue(morningDate)
+    
+    const userName = 'Magesh',
+      expectedResult = 'Hi Magesh, Good Morning!'
+
+    //Act
+    const actualResult : string = greeterService.greet(userName);
+
+    //Assert
+    expect(actualResult).toBe(expectedResult);
+  });
+
+  it('should greet the user with Good Afternoon when greeted after 12', () => {
+    //Arrange
+    const afternoonDate = new Date(2022,7,4,13,0,0);
+    spyOn(datetimeService, 'getCurrent').and.returnValue(afternoonDate)
+    /**
+     * So here what we are doing is that we are creating a fake method by which 
+     * we are going to return a hardcoded afternoonDate! This is because in unit 
+     * testing we need to test in isolation so here we are testing the greeterService 
+     * in isolation by using jasmines' spyOn which will allow us to redirect the 
+     * getCurrent() from the datetimeService to be that of the getCurrent from the 
+     * spyOn where the return value we are using is that of afternoonDate!!!
+     * So basically we are using fake data in the form of the dependency class that 
+     * that the greet service will normally call so that we can test to see if there
+     * is an issue within the Greeter service in itself!!! 
+     */
+    
+    const userName = 'Magesh',
+      expectedResult = 'Hi Magesh, Good Afternoon!'
+
+    //Act
+    const actualResult : string = greeterService.greet(userName);
+
+    //Assert
+    expect(actualResult).toBe(expectedResult);
+  })
+})
+
+//We will see why this below manner is actually also beneficial! 
+/* 
+import { TestBed } from '@angular/core/testing';
+import { GreeterService } from './greeter.service';
+describe('GreeterService', () => {
+  let service: GreeterService;
+  beforeEach(() => {
+    TestBed.configureTestingModule({});
+    service = TestBed.inject(GreeterService);
+  });
+  it('should be created', () => {
+    expect(service).toBeTruthy();
+  });
+});
+ */

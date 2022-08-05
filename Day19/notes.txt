@@ -1,0 +1,12 @@
+In order to do unit testing we should not be testing classes that have dependencies
+on other classes with that dependency but rather we need to create a mock 
+class to act as that dependency so that we can isolate that one class on its own 
+as when we do unit testing we need to isolate all tests/class, etc.. so that 
+we can trully see if the error is within one class or in some other area! otherwise
+we will have a hard time being able to see where exactly is that error!!
+
+If we were to have used that dependency then that is integration testsing and not unit 
+testing!
+
+Unit testing requires us to test each unit in ISOLATION without any dependencies!!
+

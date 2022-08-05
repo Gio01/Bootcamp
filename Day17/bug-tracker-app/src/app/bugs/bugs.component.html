@@ -1,0 +1,79 @@
+<!-- BugStats Component -->
+<!-- <h1>Bug Tracker</h1>
+<hr>
+<section class="stats">
+  </!-- Here what we are doing is simply passing the entire bugs array into the
+  closedCount pipe so that it can handle that presentation for us! -->
+  <!-- <span class="closed" >{{bugs | closedCount}}</span>
+  <span> / </span>
+  <span>{{bugs.length}}</span>
+</section> --> 
+
+<!-- <app-bug-stats [data]="bugs"></app-bug-stats> -->
+<app-bug-stats [data]="bugOperations.bugs"></app-bug-stats>
+
+<!-- BugSort Component-->
+ <!-- <section class="sort"><label for="">Order By :</label>
+  <select name="" id="" (change)="sortAttr = $any($event.target).value">
+      <option value="">---Select---</option>
+      <option value="id">Id</option>
+      <option value="name">Name</option>
+      <option value="isClosed">Status</option>
+      <option value="createdAt">Created</option>
+  </select>  
+ <label for="">Descending ? :</label>
+  <input type="checkbox" name="" id="" (change)="sortDsc = $any($event.target).checked">
+</section>
+
+-->
+
+<app-bug-sort (toSortAttr)="sortAttr = $event" (toSortDesc)="sortDsc = $event"></app-bug-sort> 
+
+<!-- BugEdit Component -->
+<!-- <section class="edit">
+  <label for="">Bug Name :</label>
+  <input type="text" name="" id="" (input)="newname = $any($event.target).value">
+  <button (click)="add()">Add New</button>
+</section> -->
+
+<!-- <app-bug-edit (bugAdded)="onNewBugAdded($event)"></app-bug-edit> -->
+<app-bug-edit></app-bug-edit>
+
+<!-- BugList Component -->
+<!-- <section class="list" >
+  <ol>
+      <li *ngFor="let el of bugs | sort:sortAttr:sortDsc" >
+        <!/-- Here we use the {{el | json}} instead of el.bug so that we can get a string
+        of the entire json object so that we can see the entire data!  --/>
+          <span class="name"
+          (click)="onToggle(el)"
+          [ngClass]="{ closed: el.isClosed }" >
+          {{el.name | trimText:10 }}</span>
+          <small>[{{el.id}}]</small>
+          <div class="datetime">[{{el.createdAt | createdAt}}]</div>
+          <button (click)="onRemove(el)">Remove</button>
+      </li>
+      <!/-- <li>
+          <span class="name closed">[This is bug - 2]</span>
+          <div class="datetime">[createdAt]</div>
+          <button>Remove</button>
+      </li> --/>
+  </ol>
+  <button (click)="onRemoveClosed()">Remove Closed</button>
+  
+</section>
+  -->
+<!--
+  In my approach I was trying to send all of the data that the bugList will need
+  in order to also manage the sorting from there! However his version what we do 
+  is to move some of the logic from the bugs.component into the bugs.list so that 
+  this child component has all of the logic for the things that it will be using
+  in that section in the UI! 
+
+  <app-bug-list [bugs]="bugs" [sortAttrName]="sortAttr" [sortDesc]="sortDsc"
+(callToggle)="onToggle($event)" (toRemove)="onRemove($event)" (toRemoveAll)="onRemoveClosed()"></app-bug-list>  -->
+
+<!-- <app-bug-list [bugs]="bugs | sort:sortAttr:sortDsc" (onBugsChange)="bugs = $event"></app-bug-list>  -->
+
+<!-- BugList -->
+<app-bug-list [bugs]="bugOperations.bugs | sort:sortAttr:sortDsc"></app-bug-list>

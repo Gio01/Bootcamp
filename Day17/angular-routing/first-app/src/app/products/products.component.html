@@ -1,0 +1,40 @@
+<h3>Products</h3> 
+<hr>
+
+<!-- <label for="">Product Name :</label>
+<input type="text" #productInput (input)="prodInput = productInput.value"> -->
+<input type="text" #txtProductName>
+<button (click)="onAdd(txtProductName.value)">Add</button>
+<ul>
+    <!/- This now refers to the list of products which we now have within the prodService!  -->
+    <li *ngFor="let prod of productsService.list" >
+        <!-- <a [routerLink]="['details', prod.name]">{{prod.name}}</a> -->
+        <a [routerLink]="['.', prod.name]">{{prod.name}}</a>
+        <!-- Here we can simply pass the prod as that is the current element in 
+        the array that we are looking at into the remove function! 
+        Need to read what the errors are better!!
+         -->
+        <button (click)="onRemove(prod)"> X </button>
+    </li>
+
+    <!-- <li>
+        <span>Product - 2</span>
+        <button> X </button>
+    </li> -->
+</ul>
+
+
+<!-- <h3>Products</h3>
+<hr>
+<label for="">Product Name :</label>
+<input type="text" #txtProductName>
+<button (click)="onAdd(txtProductName.value)">Add</button>
+<ul>
+    <li *ngFor="let product of productsService.list">
+        <a [routerLink]="['details', product.name]">{{product.name}}</a>
+        <button (click)="onRemove(product)"> X </button>
+    </li>
+</ul> -->
+
+<router-outlet></router-outlet>  <!-- components for the child routes to be displayed here -->
+

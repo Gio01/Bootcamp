@@ -1,2 +1,3 @@
 # BootcampCode
- This is some code implemented both by me and with solutions with my own explnations to better understand the concepts. 
+ This is some code implemented by me and with solutions with my own explanations to better understand the concepts. 
+ 
