@@ -1,0 +1,64 @@
+Language
+    Data Types
+    Constructors
+    Functions
+    Collection Types (Types, Lists, Sets, Dictionaries)
+    Pythonic Programming (List comprehension)
+
+Object Oriented Programming
+Functional Programming
+MultiThreading & MultiProcessing
+Testing
+Web Api using flask
+
+Python?
+    - this is an interpreted Language
+    - loosely typed 
+
+Data Types
+    Integers
+    Strings -> these are immutable so we cannot directly try to change them! 
+    
+you can find the type of the variable by using
+    - type(var)
+
+
+first_name = 'Gio'
+last_name = 'Ordonez'
+
+full_name = first_name + ' ' + last_name //'Gio Ordonez'
+full_name[0] //'G'
+
+len(full_name) //11
+full_name[0] = 'a' //TypeError! Str object does not support item assignment!! Strings are immutable so we cannot
+                    //change the values of the created Strings
+
+String slicing! 
+full_name[0:3] //'Gio' cells 0 to 2 the end is not exclusive! 
+full_name[-1] //'z'
+full_name[-5:-1]//'onez' (this is going backwards so we need to flip thepositions for the -5 
+                //and the -1! Rather weird so really think about it because full_name[-1:-5]
+                //will give you an empty string! )
+
+full_name[5:len(full_name)]// 'rdonez'
+full_name[:5] //'Gio O'
+
+
+str_with_spaces = '        This is a string with spaces       '
+str_with_spaces.lstrip() //'This is a string with spaces       '
+str_with_spaces.rstrip() //'        This is a string with spaces'
+str_with_spaces.strip() //'This is a string with spaces'
+
+full_name.startswith('G')//True
+full_name.endswith('z') //True
+
+
+input() //this function is used to get user input! you can also store this into a var s = input()
+input('Enter your name') //this message will be prompted to the user before they input something
+
+
+'Python' + 2 //Error! cannot concatenate str and an interpreted
+'python' * 2 //'pythonpython'
+
+
+

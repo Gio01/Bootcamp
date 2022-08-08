@@ -1,0 +1,11 @@
+/* You can add global styles to this file, and also import other style files
+
+Here we should include any styles that we want the entire application/all components
+to have 
+*/
+
+/* body{
+    margin-bottom: 10px;
+} */
+html, body { height: 100%; }
+body { margin-bottom: 10px; font-family: Roboto, "Helvetica Neue", sans-serif; }

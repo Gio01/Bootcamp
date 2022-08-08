@@ -1,0 +1,9 @@
+<mat-card>
+    <ol>
+        <a [routerLink]="['project', project?.id]">{{project?.name}}</a>
+
+        <app-project-bugs [bugs]="bugOperations.bugs"></app-project-bugs> 
+
+    </ol>
+</mat-card>
+<br>

@@ -1,0 +1,19 @@
+<section class="edit">
+    <form [formGroup]="newProjectForm">
+      <!-- the ngForm is the angular manner of handling forms and the #newBugFormGroup
+      is a template tag that we can use to reference this form in the UI -->
+      <div>
+        <!-- <label for="">Bug Name :</label> -->
+  
+        <mat-form-field appearance="fill">
+          <mat-label>Description</mat-label>
+          <input matInput type="text" name="projectName" formControlName="newProjectName"> 
+        </mat-form-field>
+
+      </div>
+   
+      <button mat-raised-button color="primary" (click)="onAddNewProject()" >Add New</button>
+     
+    </form>
+  </section>
+  

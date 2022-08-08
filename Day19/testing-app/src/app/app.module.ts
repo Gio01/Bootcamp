@@ -6,13 +6,15 @@ import { AppComponent } from './app.component';
 import { CalculatorComponent } from './components/calculator/calculator.component';
 import { GreeterComponent } from './components/greeter/greeter.component';
 import { TrimTextPipe } from './pipes/trim-text.pipe';
+import { ProductsComponent } from './components/products/products.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TrimTextPipe,
     CalculatorComponent,
-    GreeterComponent
+    GreeterComponent,
+    ProductsComponent
   ],
   imports: [
     BrowserModule,

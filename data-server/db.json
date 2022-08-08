@@ -4,69 +4,88 @@
       "id": 6,
       "name": "Application not responding",
       "isClosed": false,
-      "createdAt": "2022-02-18T09:16:15.098Z"
+      "createdAt": "2022-02-18T09:16:15.098Z",
+      "projectId": 1
     },
     {
       "id": 7,
       "name": "Server communication failure",
       "isClosed": false,
-      "createdAt": "2022-02-18T09:53:42.905Z"
+      "createdAt": "2022-02-18T09:53:42.905Z",
+      "projectId": 3
     },
     {
       "id": 8,
       "name": "Router is not routing",
       "isClosed": false,
-      "createdAt": "2022-02-18T11:24:02.322Z"
-    },
-    {
-      "id": 9,
-      "name": "New Bug",
-      "isClosed": false,
-      "createdAt": "2022-07-28T20:34:01.609Z"
-    },
-    {
-      "id": 10,
-      "name": "",
-      "isClosed": false,
-      "createdAt": "2022-08-02T13:48:12.210Z"
+      "createdAt": "2022-02-18T11:24:02.322Z",
+      "projectId": 2
     },
     {
       "id": 11,
       "name": "Bug Issue XXS",
       "isClosed": false,
-      "createdAt": "2022-08-02T18:58:21.214Z"
+      "createdAt": "2022-08-02T18:58:21.214Z",
+      "projectId": 3
     },
     {
       "id": 12,
       "name": "<script>alert('hacked')<script>",
       "isClosed": false,
-      "createdAt": "2022-08-02T18:58:48.269Z"
+      "createdAt": "2022-08-02T18:58:48.269Z",
+      "projectId": 2
     },
     {
       "id": 13,
       "name": "<script>alert(1)<script>",
       "isClosed": false,
-      "createdAt": "2022-08-02T18:59:27.238Z"
+      "createdAt": "2022-08-02T18:59:27.238Z",
+      "projectId": 1
     },
     {
       "id": 14,
       "name": "<script>alert(window.origin)</script>",
       "isClosed": false,
-      "createdAt": "2022-08-02T19:00:32.101Z"
+      "createdAt": "2022-08-02T19:00:32.101Z",
+      "projectId": 1
     }
   ],
   "projects": [
     {
       "id": 1,
-      "name": "Bug Tracker"
+      "name": "Bug Tracker",
+      "desc": "This is a bug tracker application for the purposes of tracking bugs within applications",
+      "commenceDate": "2022-06-02T19:00:00.101Z"
     },
     {
       "id": 2,
-      "name": "Project Management"
+      "name": "Management",
+      "desc": "A project to manage the teams within the IT department",
+      "commenceDate": "2022-07-02T21:00:32.101Z"
     },
     {
       "id": 3,
-      "name": "Time Tracker"
+      "name": "Time Tracker",
+      "desc": "This is a project to track the amount of time that employees take on certain projects",
+      "commenceDate": "2022-05-02T08:00:32.101Z"
+    },
+    {
+      "id": 4,
+      "name": "Bug Tracker 2.0",
+      "desc": "",
+      "commenceDate": "2022-08-08T12:44:22.976Z"
+    },
+    {
+      "id": 5,
+      "name": "Bug Tracker 2.0 new",
+      "desc": "",
+      "commenceDate": "2022-08-08T12:44:57.609Z"
+    },
+    {
+      "id": 6,
+      "name": "Bug Fixed!",
+      "desc": "",
+      "commenceDate": "2022-08-08T12:48:20.656Z"
     }
   ]
 }

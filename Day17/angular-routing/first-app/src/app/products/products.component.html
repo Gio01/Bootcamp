@@ -6,7 +6,7 @@
 <input type="text" #txtProductName>
 <button (click)="onAdd(txtProductName.value)">Add</button>
 <ul>
-    <!/- This now refers to the list of products which we now have within the prodService!  -->
+    <!-- This now refers to the list of products which we now have within the prodService!  -->
     <li *ngFor="let prod of productsService.list" >
         <!-- <a [routerLink]="['details', prod.name]">{{prod.name}}</a> -->
         <a [routerLink]="['.', prod.name]">{{prod.name}}</a>

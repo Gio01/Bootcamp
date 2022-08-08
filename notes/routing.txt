@@ -1,0 +1,66 @@
+app.module.ts
+
+let routes: Routes = [
+
+	{
+		path: 'products', //this will be part of the url ex: localhost:4200/products
+		component: ProductsComponent, //the component we want to serve to the user when they hit that url
+		children: [
+			path: ':productName', //this is the added part after the /products in the url for where to route the user
+					//if they type in something like localhost:4200/products/pencil
+			component: ProductComponent, //the component to show the user when they hit that new endpoint
+			children: [
+				{
+					path: 'details', 
+					component: ProductDetailComponent //the component to show the user when they hit the endpoint
+						//ex: localhost:4200/products/pencil/details
+				}
+			]
+		]	
+	}
+
+
+app.component.html
+
+	<a [routerLink]="['/products']">Products</a> //here the user will be able to click on the Product nav to hit the endpoint
+
+
+products.component.ts
+
+- we have the Products service within the constructor to then get access to the ProductService methods which will 
+talk to the Api so that we can get the data from the server into that Service array instance for the products that we 
+can then use and share with the rest of the files!
+
+
+products.component.html
+
+- <li *ngFor="let prod of productsService.list">
+	<a [routerLink]="['.', prod.name]"> {{prod.name}} </a>
+  </li>
+
+So here what we are saying is that from the list of products we want to loop through them using the ngFor and then 
+display those products in a list form where each of these products will be a hyperlink that will route the user to 
+the children of the products in the routes which will be that of the productComponent which is why we then see that 
+the Procudt: Pen and the details hyperlink appears since that is the Html within the product.component.html which is the
+children of products within the routes that we had defined in the app.module.ts
+
+so when we click on a product the link becomes
+localhost:4200/products/pen 
+which is that of the :prodName link within the routing which means that we call that and we have defined that the 
+component to display will be that of the ProductComponent which is simply going to display the Product: product.name
+and then the new routelink for the details!!
+
+in the routerLink when we use the . this referes to the current URL link that we have so here since we just want to 
+get: localhost:4200/products/pen and we are already within localhost:4200/products what we will do is just add the name
+of the prod into the current url and hence why we use . 
+- Since we are within the current URL this also means that what we will do is simply display the new component within 
+this same Url that we are already at and hence why the details hyperlink is just appearing within the same view that 
+we have!
+
+
+--------------------
+Things that I noted!
+
+In order to get new views from having clicked on a link, within the app.module.ts routes instead of adding it within 
+the children, just create a new route with teh needed routing that you want that endpoint to be!
+
