@@ -49,6 +49,8 @@ str_with_spaces.lstrip() //'This is a string with spaces       '
 str_with_spaces.rstrip() //'        This is a string with spaces'
 str_with_spaces.strip() //'This is a string with spaces'
 
+str_with_spaces.split() // ['This', 'is', 'a', 'string', 'with', 'spaces']
+
 full_name.startswith('G')//True
 full_name.endswith('z') //True
 
@@ -60,5 +62,144 @@ input('Enter your name') //this message will be prompted to the user before they
 'Python' + 2 //Error! cannot concatenate str and an interpreted
 'python' * 2 //'pythonpython'
 
+type casting x:
+    int(x)
+    str(x)
+    float(x)
 
+Fstrings!
+f"My name is {first_name} {last_name}"
+    - this is a short cut for "My name is {} {}".format(first_name, last_name)
+
+str = f"My name is {first_name} {last_name}"
+str.find('Gio') // 11
+str.replace('Gio', 'Joe') //My name is Joe Ordonez
+str.find('hello') //-1 since this does not exist!
+
+
+10 / 4 = 2.5
+10 // 4 = 2.0 (this is how we can take of the remainder)
+10 % 3 = 1 (here we just want the remainder!)
+
+price = 123456.7654
+f"this price is {price:.2f}" // 123456.77
+f"this price is {price:,.2f}" // 123,456.77
+
+ratio = 0.9
+f"discount is {ratio:.1%}" //90.0% where the 1 means how many decimal places we want so 
+//here we said one and hence why we only have one zero after the decial! .2% == 90.00%
+
+
+round(123.456) // 123
+round(123.456, 2) //123.46
+round(123.456, 1) //123.5
+
+abs(10) //10
+abs(-10) //10
+
+2**2 // 2^2 == 4
+pow(2,2) //2^2 == 4
+
+3+2i //this is a complex number type! a complext number is one that has a 
+    //real value and an imaginary value
+
+c = 3 + 2j
+c2 = 4 + 3j
+c + c2 //7+ 5j
+c.real // 3.0
+c.imag (imaginary) //2.0
+
+t = True
+f = False
+t == f // False
+t or f //True
+t and f //False
+not t //False
+
+
+if condition: (the conditional blocks are identified via indentation)
+    statement-1
+    statement-2
+    statement-3
+elif condition: 
+    another-statement
+elif condition:
+    another-statement
+else:
+    statement-4
+    statement-5
+
+
+Similar to that of JS there are falsy expressions/values in Python
+ex: bool('') //False
+bool([]) //False
+bool(0) //False 
+bool(()) //Empty tuple --> False
+bool({}) //False
+
+If they are empty then they are falsy!!
+
+-------------
+List is a collection that is ordered and mutable and you use [] to make them 
+
+tens_list = [10, 20, 30, 40]
+mixed_list = [10, 'pen', True, 12.45]
+
+len(ten_list) //4
+tens_list[:2] //[10, 20]
+tens_list[2:] //[30,40]
+tens_list[:-1] //40
+
+do not iterrate a list with range(len(tens_list) instead use the for in!
+
+DO NOT do this!!!:
+
+for idx in range(len(tens_list)):
+    print(tens_list[idx])
+
+instead do:
+
+for val in tens_list:
+    print(val)
+
+to add an item into a list you can use the .append()
+
+tens_list.append(50) //[10, 20, 30, 40, 50]
+
+tens_list.remove(30) //[10, 20, 40, 50]
+
+This means that lists are mutable since we can add things and remove things from them!
+Unlike that of strings which we cannot change as they are not mutable!
+
+You can also add lists together!
+
+ones_list = [1,2,3,4]
+tens_list + ones_list = [10, 20, 40, 50, 1, 2, 3, 4]
+
+you can remove an item from a list based on the index by using the del keyword!
+While remove() is used to remove an item based on the value the cell has! 
+
+del tens_list[1] //[10, 40, 50]
+
+ones_list[1:3] = ['two', 'three']
+ones_list // [1, 'two', 'three, 4] so here what we did was replace the original values
+    //that were there which were 2, 3.
+
+ones_list[1:3] = ['two', 'three', 'four', 'five']  //here we are trying to insert four
+    //values from index 1-2 which and what python does it is will insert them all there
+    //and push the other things over! Meaning it only replaces those values within the range
+    //at which it is inserting into and simply pushes over the rest that it was not inserting
+    //into!! 
+
+ones_list //  [1, 'two', 'three', 'four', 'five', 4]
+
+ones_list[1:5] = []
+ones_list // [1, 4]
+
+ones_list = [0] + ones_list
+ones_list // [0, 1, 4]
+
+values = [-1, -2]
+values.extend(ones_list) //this will add/append the lists together! 
+values // [-1, -2, 0, 1, 4]
 

@@ -1,0 +1,323 @@
+In python you have lists but you can also import the array module by which we can created
+an array of a certain type which is different than that of a list since a list can be of
+many different types 
+
+methods that you are use on a list 
+values = [-1, -2, 0, 1, 4]
+sum(values)//2
+min(values)//-2
+max(values) //4
+values.insert(-3, 2)//[-1, -2, 2, 0, 1, 4]
+
+-------------------------
+Tuples are collections that are ordered but are immutable and you use the () to create them
+Essentially you can use the same methods that you can use within a list 
+
+products = ('Pen', 'Pencil', 'Marker', 'Scribble-Pad')
+products[0] // 'Pen'
+len(products) //4
+
+products[1:3] // ('Pencil', 'Marker')
+
+products[0] = ' ' //this will give an error that says that tuples do not support
+                //index assignment! Remember that tuples are immutable! 
+
+natural_nos = 1, 2, 3, 4 //will automatically create a tuple without the use of ()
+natural_nos // (1, 2, 3, 4) 
+
+empty_tuple = ()
+empty_tuple //()
+
+now to create a tuple with a single value we need to use a , because otherwise python will think
+that we are trying to use arithmetic with the () ! 
+
+no = (2,)
+no // (2,)
+
+vs. 
+
+no = (2)
+no // 2 which is not a single item tuple
+
+
+pen = ('Pen', 100, 'Stationary')
+name, cost, category, = pen
+name = 'Pen'
+cost = 100
+category = 'Stationary' 
+
+This is essentially deconstruction just like in JS
+
+n1, n2 = [10, 20]
+n1 //10
+n2 //20
+
+n1, n2 = n2, n1 //swapping values! 
+n1 //20
+n2 //10
+
+
+You can also iterate through the tuples!!
+
+for val in pen:
+    print(val)
+
+Pen
+100
+Stationary
+
+Tuples tend to be used a lot when needing to unpack data!
+
+------------------------
+Sets is a collection which is unordered and cannot be indexed since it is 
+unordered and it is mutable. Also cannot have duplicate values!
+
+x = {'foo', 'bar', 'baz'}
+
+type(x) 
+
+While you cannot index into a set because sets are unordered you can
+whether a value exits in the set or not 
+
+z = {[10, 20, 30], [1, 2, 3]} //this gives us an error since lists are
+    //mutable and we are trying to add them into a set which is immutable
+
+z = {(10, 20, 30), (1, 2, 3)} //this is fine since a tuple is immutable as well
+
+
+you can also make sets through the set() function
+
+p = set((6, 'Pen', 50, 20, 'Stationary'))
+//{6, 'Pen', 50, 20, 'Stationary'}
+
+nos = set([10, 20, 30, 30, 20])
+nos // {10, 20, 30} as sets cannot have duplicates 
+
+products = set() //we need to do this to create an empty set because trying to do
+//products = {} will cause typeof(products) to be of type dictionary!!
+typeof(products) //set 
+
+products_name.add('pen')
+products_name // {'Pen'}
+
+names_list = {'pencil', 'marker', 'Scribble-Pad'}
+
+
+products_name.update(names_list)
+products_name // {'pencil', 'Pen', 'marker', 'Scribble-Pad'}
+
+products_name.remove('Pen')
+products_name // {'pencil', 'marker', 'Scribble-Pad'}
+
+vs. 
+
+products_name.discard('Pen')
+products_name // {'pencil', 'marker', 'Scribble-Pad'}
+
+what is the difference? well it is on whether you try to again remove the 
+same item once it is not there or removing some item that does not exits in 
+the set!
+
+ex: products_name.remove('Pen') again will say that keyError: 'Pen' since it does
+not exist in the set!
+
+vs
+ex: products_name.discard('Pen') again will not do anything and just ignore
+running the discard method again with no error!
+
+
+x1 = {'foo', 'bar', 'baz'}
+x2 = {'baz', 'qux', 'quux'}
+x1 | x2 //union! Meaning what exists in x1 or in x2 and no duplicates! 
+//{'quux', 'baz', 'foo', 'bar', 'qux'}
+
+you can also use the x1.union(('baz', 'qux', 'quux')) to make a union set with
+anothe immutable collection! but if they are both sets than you can just use the 
+| notation to create that union like we did before!
+
+
+Intersection (and) will get us all the elements that some sets have in common
+x1 = {'foo', 'bar', 'baz'}
+x2 = {'baz', 'qux', 'quux'}
+x1 & x2 // {'baz'}
+
+x1.intersection(x2) // {'baz'}
+
+
+Find all the items in the set that is not in another set
+x1 = {'foo', 'bar', 'baz'}
+x2 = {'baz', 'qux', 'quux'}
+x1.difference(x2) // {'foo', 'bar'}
+x1 - x2 // {'foo', 'bar'}
+
+When you want to remove the value that the sets have in common! Or the items
+that are in the intersection of x1 and x2 which would be 'baz' here so we remove
+'baz' in the new set created! 
+x1.symmetric_difference(x2) // {'quux', 'foo', 'qux', 'bar'}
+x1 ^ x2 // {'quux', 'foo', 'qux', 'bar'}
+
+
+Finding whether a set is a subset of another
+x1 = {'foo', 'bar', 'baz'}
+a = {'foo', 'bar'}
+a < x1 // True since a is a subset of x1
+a.issubset(x1) // True 
+
+x1 > a // True saying that x1 is the superset of a
+x1.issuperset(a) //True since x1 is the superset of a
+a.issuperset(x1) //False 
+
+We can create an immutable set by using the frozenset!!
+
+frozen_set = frozenset(['foo', 'bar', 'baz'])
+frozen_set.remove('foo') //gives us an error since we are trying to change an 
+//immutable/frozen set!!!
+
+x1 // {'foo', 'bar', 'baz'}
+x1.clear()
+x1 // set()
+
+Any time we need to think of a unique set of values we can use sets! 
+
+---------------------------
+Dictionaries are a key-value collection where the keys have to be unique!
+
+product_ranks = {'pen': 4, 'pencil': 1, 'charger': 3}
+
+index with the key
+product_ranks['pen'] // 4
+product_ranks.get('pen') //4
+
+product_ranks.keys() // dict_keys(['pen', 'pencil', 'charger'])
+product_ranks.values() // dict_values([4, 1, 2, 3])
+
+Create a new item in the dictionary
+product_ranks['notebook'] = 5 //simply add a new key! 
+
+Updating values!
+product_ranks['pen'] = 10 //{'pen': 10, 'pencil': 1, 'charger': 3, 'notebook':5}
+product_ranks.update({'pencil':20, 'charger':30})
+//{'pen': 10, 'pencil': 20, 'charger': 30, 'notebook':5}
+
+removing items 
+del product_ranks['pen']//if you run it again it will give you an error if the key
+//does not exist!
+//{'pencil': 1, 'charger': 3, 'notebook':5}
+
+
+del product_ranks //deletes the entire dictionary
+
+
+product_ranks.clear() //empties the dict but keeps the structure {}
+//{}
+
+product_ranks.items() will print out all of the items inside in a tuple form! 
+
+The keys can be any mutable type!
+
+product_ranks = {'pen': 4, 'pencil': 1, 'marker': 2, 'charger': 3}
+for x in product_ranks.values():
+    print(x)
+
+4
+1
+2
+3
+
+for x in product_ranks:
+    print(x, product_ranks[x])
+
+pen 4
+pencil 1
+marker 2
+charger 3
+
+
+for key, val in product_ranks:
+    print(key, val)
+
+pen 4
+pencil 1
+marker 2
+charger 3
+
+dup_product_ranks = product_ranks
+product_ranks['notebook'] = 5 
+
+product_ranks
+{'pen': 4, 'pencil': 1, 'marker': 2, 'charger': 3, 'notebook': 5}
+
+dup_product_ranks
+{'pen': 4, 'pencil': 1, 'marker': 2, 'charger': 3, 'notebook': 5}
+
+This means that the dup_product_ranks is pointing to the same dictionary!!
+
+Now if we really wanted a copy of the dict then we need to use .copy()
+dup_product_ranks = product_ranks
+product_ranks['sharpie'] = 6
+
+product_ranks
+{'pen': 4, 'pencil': 1, 'marker': 2, 'charger': 3, 'notebook': 5, 'sharpie': 6}
+
+dup_product_ranks
+{'pen': 4, 'pencil': 1, 'marker': 2, 'charger': 3, 'notebook': 5}
+
+meaning that dup_product_ranks really is only a copy and so changes made to the 
+product_ranks will not affect the copy since they are at different addresses and 
+dup_product_ranks is not just a pointer to the other dictionary
+
+
+product_ranks.setdefault('marker', 100)
+2  //the reason is that marker is a key that already exists! so we get 2
+
+but we can use this setdefault() to create a key with the val we give if the key
+does not already exists in the dictionary
+product_ranks.setdefault('Scribble-Pad', 100)
+100 //returns 100 since we do not have Scribble-Pad as a key in the dict!
+
+product_ranks
+{'pen': 4, 'pencil': 1, 'marker': 2, 'charger': 3, 'notebook': 5, 'sharpie': 6, 
+'Scribble-Pad': 100}
+
+-------------------
+
+List comprehension
+
+nos = [1,2,3,4,5]
+double_nos = []
+
+for no in nos:
+    double_nos.append(no * 2)
+
+double_nos
+[2, 4, 6, 8, 10]
+
+[no for no in nos]
+[1, 2, 3, 4, 5]
+
+[no*2 for no in nos]
+[2, 4, 6, 8, 10]
+
+[no for no in nos if no % 2 == 0] # returns no if the condition is true! 
+[2, 4]
+
+[no * 2 for no in nos if no % 2 == 0] #returns no * 2 if the condition is true!
+[4, 8]
+
+{no*2 for no in nos if no % 2 == 0}
+
+tuple(no*2 for no in nos if no % 2 == 0)
+
+       
+product_names = ['Pen', 'Pencil', 'Marker']
+product_ranks = [3, 1, 2]
+products = {product_names[i]: product_ranks[i] for i in range(len(product_names))}
+
+
+NOTE: you cannot add and elif or else within the comprehensions! The if that 
+is used is just a conditino to to something or not! 
+
+
+-------------------
+Functions
+
