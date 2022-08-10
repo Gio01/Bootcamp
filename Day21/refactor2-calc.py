@@ -1,6 +1,9 @@
-from itertools import count
-from turtle import st
-
+''''
+This version that I made was not the manner in which he wanted it done! I was trying to get 
+the user to be able to create their own functinality through the command line and that 
+can be kinda hard and then on the security perspective that can be rather dangerous if the 
+user is able to hijack that eval() call to execute their own commands
+'''
 
 def add(x, y):
     return x + y
