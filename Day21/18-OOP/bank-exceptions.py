@@ -67,7 +67,7 @@ class BankAccount:
 
     def deposit(self, amount):
         if amount < 0:
-            print('Cannot deposit a negative amount into balance')
+            raise InvalidAmount()
         else:
             self.__balance += amount
             # self.history = (f"Deposit {amount}")
@@ -79,7 +79,7 @@ class BankAccount:
     
     def withdraw(self, amount):
         if amount > self.__balance:
-            print('Cannot withdaw more than the balance amount')
+            raise InsufficientBalance()
         else:
             self.__balance -= amount
             # self.history.append(f"Withdrawn {amount}")
@@ -113,7 +113,7 @@ class BankAccount:
     
     @property
     def balance(self):#using the history to calc the balance!
-        _balance = 0
+        #_balance = 0
         result = reduce(lambda result, txn: (result + txn[1])  if txn[0] =='Deposit' else (result - txn[1]), self._transactions, 0)
         print(result)
         #this lambda with the reduce is doing this below for loop for us
@@ -296,26 +296,44 @@ if (__name__ == '__main__'):
     '''If you hover over the CheckingAccount() you will the params of name and initial_balance
     which means that through the inheritance we have also inherited the same constructor from the
     parent BankAccount class!'''
-    ca = CheckingAccount('Gio"s Checking Account', 100, 50)
-    print(ca.balance)#here we will see that a new bank account is created gets printed out
-    #and the deposit of 100 gets deposited as the initial balance! Meaning that the constructor
-    #of the parent BankAccount class ran!
+    # ca = CheckingAccount('Gio"s Checking Account', 100, 50)
+    #     print(ca.balance)#here we will see that a new bank account is created gets printed out
+    #     #and the deposit of 100 gets deposited as the initial balance! Meaning that the constructor
+    #     #of the parent BankAccount class ran!
 
-    ca.deposit(1000)
-    ca.withdraw(500)
-    ca.history()
-    print(f"balance = {ca.balance}") 
-    print(f"Checking balance = {ca.check}") 
-    print(ca._transactions)
-    account = BankAccount('Gio', 0)
-    account.deposit(1000)
-    print(account._transactions)
-    '''
-    Now given that we basically have access to all of the methods and constructor from the
-    BankAccount class why would we want to inherit from the parent if we are basically just 
-    doing everything that was in the parent class? 
-    
-    The reason is if we want to add some other functinality on top of the parent class or 
-    if we want to overwrite the functionality of a method that is in the parent class to 
-    work for the child class in a manner appropiate for that child class!
-    '''
+    #     ca.deposit(100)
+    #     ca.withdraw(500)
+    #     ca.history()
+    #     print(f"balance = {ca.balance}") 
+    #     print(f"Checking balance = {ca.check}") 
+    #     print(ca._transactions)
+    #     account = BankAccount('Gio', 0)
+    #     account.deposit(1000)
+    #     print(account._transactions)
+
+    try:
+        
+        '''
+        Now given that we basically have access to all of the methods and constructor from the
+        BankAccount class why would we want to inherit from the parent if we are basically just 
+        doing everything that was in the parent class? 
+        
+        The reason is if we want to add some other functinality on top of the parent class or 
+        if we want to overwrite the functionality of a method that is in the parent class to 
+        work for the child class in a manner appropiate for that child class!
+        '''
+        account = BankAccount('Gio', 0) #passing a name into the constructor for creating the instance 
+        account.who_am_i()
+        account.deposit(-100) #invalid amount deposited error!
+        account.withdraw(1000) #insufficient funds error!
+        # print(f"Account name = {account.name}")
+        # print(f"Account balance of {account.name} = {account.balance}")
+
+        account.deposit(100)
+        account.withdraw(100)
+    except InvalidAmount:
+        print('Deposited an invalid amount')
+    except InsufficientBalance:
+        print('Not enough balance to withdraw that amount')
+    else:
+        print('Thank You!')
