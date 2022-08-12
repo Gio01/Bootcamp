@@ -1,0 +1,36 @@
+bank account assignment
+-------------------
+
+user should be able to make
+- deposits
+- withdrawal
+
+we need to store this data in a csv file 
+
+
+Think about this as a single account and the file will contain for
+data from only a single account
+
+In the file we should store all the transaction history and then
+we should be able to get the transactions and then use that to 
+calculate the current balance!
+
+
+each row should be a transaction
+columns will be the names such as 
+- Type: deposit or withdrawal
+- Date: for when the transaction was made
+- Account name: to know from what acc the transactions are from
+
+
+Bank Account Interface Menu:
+1. Withdraw
+2. Deposit
+3. Check Balance
+4. Exit
+(we can have an option to save or we can automatically store it upon
+each request for either a withdrawal or deposit!)
+
+Ensure to delegate the responsibilities to each module accordingly such as
+the storage functionality should be within its own module!
+
