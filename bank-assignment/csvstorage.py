@@ -2,44 +2,53 @@ import csv
 from datetime import datetime
 import os
 
-fieldnames = ['transaction-type', 'amount', 'date']
 
-def write(data):
-    file_exists = os.path.isfile('transactions.csv')
-    fieldnames = ['transaction-type', 'amount', 'date']
-    
-    #open a file in append mode to just append data and not overwrite it!
-    with open('transactions.csv', 'a+', newline='') as csvfile:
-        #here we use newline because of not by default a \n is added and hence will have 
-        #rows that are empty because of the new line!
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-        date = datetime.now()
+class CSVStorage: 
 
-        #if the csv file does not exist then do not add new headers each time!
+    def __init__(self, file):
+        self.__file = file
+        self.__fieldnames = ['transaction-type', 'amount', 'date']
+        file_exists = os.path.isfile('transactions.csv')
         if not file_exists:
-            writer.writeheader()
+            with open(self.__file, 'a+', newline='') as csvfile:
+                writer = csv.DictWriter(self.__file, fieldnames= self.__fieldnames)
+                writer.writeheader()
+                csvfile.close()
         
-        writer.writerow({'transaction-type': data[0], 'amount': data[1], 'date': date.strftime("%Y-%m-%d %H:%M:%S")})
+        '''Here we are just checking to see if a file exists so that if it does not we are to create
+        it and then add the headers into the file when the class is instantiated within the bank class!
+        '''
 
+    def write_transactions(self, data):
+        
+        #open a file in append mode to just append data and not overwrite it!
+        with open('transactions.csv', 'a+', newline='') as csvfile:
+            #here we use newline because of not by default a \n is added and hence will have 
+            #rows that are empty because of the new line!
+            writer = csv.DictWriter(csvfile, fieldnames=self.__fieldnames)
+            date = datetime.now()
+            
+            writer.writerow({'transaction-type': data[0], 'amount': data[1], 'date': date.strftime("%Y-%m-%d %H:%M:%S")})
+
+            csvfile.close()
+        
+        print('Storing data was completed\n')
+
+    def read_transactions(self):
+        transactions = ()
+
+        with open('transactions.csv', 'r', newline='') as csvfile:
+            rows = csv.DictReader(csvfile)
+
+            for row in rows:
+                transactions += ((row['transaction-type'], row['amount'], row['date']), ) #returning data as a tuple of tuples
+                #so that they are back in a non mutable form!! Do not want users to be able to change the data somehow! 
+                #print(f"{row['transaction-type']} with amount {row['amount']} was done at {row['date']}")
+
+        print('Reading data was completed\n')
         csvfile.close()
-    
-    print('Storing data was completed\n')
 
-def read():
-    transactions = ()
-
-    with open('transactions.csv', 'r', newline='') as csvfile:
-        rows = csv.DictReader(csvfile)
-
-        for row in rows:
-            transactions += ((row['transaction-type'], row['amount'], row['date']), ) #returning data as a tuple of tuples
-            #so that they are back in a non mutable form!! Do not want users to be able to change the data somehow! 
-            #print(f"{row['transaction-type']} with amount {row['amount']} was done at {row['date']}")
-
-    print('Reading data was completed\n')
-    csvfile.close()
-
-    return transactions
+        return transactions
 
 if __name__ == '__main__':
     read()

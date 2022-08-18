@@ -42,7 +42,7 @@ export class PipesComponent{
         }
         else if (currSelect === 'INR'){
             this.convertedValue = this.currencyInput * 79.8436
-            console.log( this.currencyInput, "versus convertion: ", this.convertedValue)
+            console.log( this.currencyInput, "versus conversion: ", this.convertedValue)
         }
         else if (currSelect === 'JPY'){
             this.convertedValue = this.currencyInput * 136.366
