@@ -70,7 +70,7 @@ class BankAccount:
         bank and not during the running of the app menu which means that '''
 
         # print('Previous Transactions: \n')
-        print(__transaction)
+        #print(__transaction)
         for row in __transaction:
              print(f"{row[0]} with amount {row[1]} was done at {row[2]}")
 

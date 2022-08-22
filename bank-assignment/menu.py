@@ -48,6 +48,7 @@ What operation would you like to do:
 
                     elif user_action == '5':
                         print('Thank you!')
+                        self._account._storage.close()
                         exit()
             except InvalidAmount:
                 print('Attempted to deposit invalid amount')

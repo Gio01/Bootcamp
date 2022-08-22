@@ -1,5 +1,6 @@
 import sqlite3
 from datetime import datetime
+from xml.etree.ElementPath import prepare_descendant
 
 class DBStorage:
 
@@ -18,10 +19,12 @@ class DBStorage:
     def save(self, data):
         date = datetime.now()
         format_date = date.isoformat()
-        print(f"INSERT INTO transactions VALUES ({data[0]}, {data[1]}, {format_date})")
-        self.curr.execute(f"INSERT INTO transactions VALUES ({data[0]}, {data[1]}, {format_date})")
+        #print(f"INSERT INTO transactions VALUES ({data[0]}, {data[1]}, {format_date})")
+        #Using bound params for preventing SQL injection and also performance
+        prepared_statement = '''INSERT INTO transactions (TransactionType, amount, date) VALUES (?, ?, ?)'''
+        self.curr.execute(prepared_statement, (data[0], data[1], format_date))
         self.conn.commit()
-        self.conn.close()
+
 
     
     def read(self):
@@ -31,9 +34,12 @@ class DBStorage:
         for row in self.curr.execute('SELECT * FROM transactions ORDER BY date'):
             _transactions += (row ,)
 
-        print(_transactions)
+        #print(_transactions)
         return _transactions
         
+        
+    def close(self):
+        self.conn.close()
         
         
 
