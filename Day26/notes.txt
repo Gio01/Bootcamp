@@ -134,5 +134,42 @@ result = conn.execute(stm)
 print(result.all()) #[(9, 'Gio', 'Ordonez')]
 
 
+#insert
+from sqlalchemy import insert
+stm3 = insert(author_table).values(first_name="haruki", last_name="murakami")
+conn.execute(stm3)
 
+#inserting multiple rows
+insert_stmt = insert(author_table)
+    conn.execute(insert_stmt, 
+        [{"first_name" : "f1", "last_name" : "l1"}, {"first_name" : "f2", "last_name" : "l2"}]
+    )
+
+
+
+engine = create_engine("sqlite:///./books.db", echo=True, future=True)
+
+NOTE: when we use future true, a transaction is created and any changes we make will
+not be commited until we explicitely do conn.commit()!!! Meaning that any change we make
+before doing commit() will not cause a permanent change in the table until we run
+conn.commit()!!!
+
+Once we do conn.commit() a new transaction is created!!
+
+Now the benefit in this is that since these are transactions this means that we can 
+rollback transaction changes and hence if there is some mistake or some error we can 
+default back to the previous data that was there before we had tried to commit some changes!!
+
+Hence it is advisable for us to always use this future = True so that we can use transactions!!
+
+
+#update
+    from sqlalchemy import update
+    update_stmt = update(author_table).where(author_table.c.first_name=="f1").values(first_name="Barry", last_name="Schwartz")
+    conn.execute(update_stmt)
+
+
+#delete 
+    from sqlalchemy import delete
+    delete_stmt = delete(author_table).where(author_table.c.author_id == 13)
 
