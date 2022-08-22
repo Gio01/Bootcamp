@@ -66,3 +66,73 @@ txt.commit()
 
 #rollbacking a transaction
 txn.rollback()
+
+
+#now the use of a transaction is so that instead of executing the same SQL command again and again we can create a
+#transaction which is a unit or sequence of works that you want to execute! 
+
+
+#a way by which we can bind params (give the param a value) through the use of a prepared statament!
+stmt = text("select last_name from author where last_name > :ln")
+stmt = stmt.bindparams(ln="C")
+result = conn.execute(stmt)
+
+#updating a value from the table!
+stm = text("update author set first_name = :name  where first_name='giovanni'")
+stm = stm.bindparams(name="Giovanni")
+conn.execute(stm)
+result = conn.execute('select * from author')
+print(result.all())
+
+#deleting a row from a table!
+stm2 = text('delete from author where last_name = :lname')
+stm2 = stm2.bindparams(lname="Doe")
+conn.execute(stm2)
+result = conn.execute('select * from author')
+print(result.all())
+
+ 
+SQLAlchemy statement features (Core)
+
+    from sqlalchemy import create_engine
+    engine = create_engine("sqlite:///./books.db", echo=True, future=True)
+    conn = engine.connect()
+    from sqlalchemy import MetaData, Table
+    metadata = MetaData()
+    author_table = Table("author", metadata, autoload_with=engine)
+
+So here what is happening is that again we create the engine and then we are then 
+trying to get the metadata from the table which would be the basic table info such as 
+the column names!! Then when we create the Table we use the table name we want, the 
+metadata instance which will get that metadata for us from pointing the autoload_with to
+be that of the engine which in this case is the actul db file that we want!
+
+We can even use sqlalchemy to create SQL statements on the fly by pointing that to the 
+metadata table which we created by using the Table() function above!! 
+
+from sqlalchemy import select
+select(author_table)
+stm = select(author_table)
+print(stm) #SELECT author.author_id, author.first_name, author.last_name
+FROM author 
+#which means that the select function will automatically create this select statment for us! 
+result = conn.execute(stm)
+print(result.all())
+
+
+#We can also chain stataments such as using a select and then adding a where condition!
+stm2 = select(author_table).where(author_table.c.first_name == "Gio") #c here is referring to col names
+print(stm2)
+SELECT author.author_id, author.first_name, author.last_name
+FROM author
+WHERE author.first_name = :first_name_1
+
+#NOTE: Internally it is creating a prepared statament! As you see it creates the statament with
+:first_name_1 and this means that we are safe from SQL injection in this manner! 
+
+result = conn.execute(stm)
+print(result.all()) #[(9, 'Gio', 'Ordonez')]
+
+
+
+
