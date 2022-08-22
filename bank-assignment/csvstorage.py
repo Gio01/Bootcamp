@@ -50,5 +50,7 @@ class CSVStorage:
 
         return transactions
 
+#TODO: Need to implement this app by using SQLite now instead of just a csv file
+
 if __name__ == '__main__':
     read()

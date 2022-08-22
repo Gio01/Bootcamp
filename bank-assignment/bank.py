@@ -21,7 +21,7 @@ class BankAccount:
             
         #self.__balance += self.balance
         self._storage = storage
-        self._transactions = storage.read_transactions()
+        self._transactions = storage.read()
         # print("Current Balance: ", self.__balance)
         # print('Current balance in excel: ', self.balance)
         #print(self.balance)
@@ -43,7 +43,7 @@ class BankAccount:
             #inside of another tuple! Tuple of tuples!
             #storage.CSVStorage.write(self, ('Deposit',amount))
             
-            self._storage.write_transactions(('Deposit',amount))
+            self._storage.save(('Deposit',amount))
             transaction = ('Deposit', amount)
             self._transactions += (transaction, ) #writing the data as a transaction tuple of tuples!
 
@@ -54,7 +54,7 @@ class BankAccount:
             # self.__balance -= amount
             #self._transactions += (('Withdraw', amount), )
             #storage.CSVStorage.write(self, ('Withdraw',amount))
-            self._storage.write_transactions(('Withdraw',amount))
+            self._storage.save(('Withdraw',amount))
             transaction = ('Withdraw', amount)
             self._transactions += (transaction, )
             
@@ -63,7 +63,7 @@ class BankAccount:
 
     def history(self):
         #__transactions = storage.CSVStorage.read()
-        __transaction = self._storage.read_transactions()
+        __transaction = self._storage.read()
         '''If we do not re read from storage upon each request for the 
         history we will not get the most updated version of the data since 
         at the moment when we get the data it is only when we instantiate the
