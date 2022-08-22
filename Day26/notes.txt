@@ -1,0 +1,68 @@
+python virtual env:
+    - these are more like a protected directory which will be activated when we run the env 
+    - these env are used in order to contain python version for the interpreter
+    - as well as any other dependencies that are needed for the application that we are running!
+
+installing SQL Alchemy
+    python -m pip install SQLAlchemy
+
+The benefit of using SQLAlchemy is that it can be used to connect to many different SQL flavors and hence
+has an advantage over something like the built in python sqlite3 lib since that is only for SQLite and 
+SQLAlchemy can be used for SQLite and many more other SQL DBs
+
+
+Connecting to SQLAlchemy:
+
+
+#creating the engine in order to talk to the sqlite db and then text is for the sql statement creation
+from sqlalchemy import create_engine, text
+
+engine = create_engine("sqlite:///./books.db", echo=True) #here sqltie:/// is how the engine knows it is 
+#going to be sqlite and then we just give the location of the file which is ./book.db in this case since we 
+#are in that directory already
+
+#create the connection to the db
+conn = engine.connect()
+
+#execute a SQL statement
+result = conn.execute(text("select * from author"))
+
+#print out the result
+print(result.all()) #or you can do a for loop through each of the rows in result!
+
+for row in result:
+    print(f"{row.last_name}, {row.first_name}") #this is based on the column names which are the names in the table!
+
+for _, first_name, last_name in result: #this is for doing unpacking through the iteration! recall _ means we do not want that
+    print(first_name, last_name) #value and in this case that would be the author_id value! 
+
+for dict_row in result.mappings():
+    print(dict_row) #this will give us the data in the form of a dictionary!
+
+'''
+Now when we get the result we get back a cursor object which is called this because once we get the results and
+we print them, if we try to print the results again from that same all() we will get an empty list as it is
+discarded! So we will need to re execute the sql statement for select * from author in order to get the 
+results again in the result var!!
+'''
+
+
+
+#SQL injection -> when the user has direct access to the values that are being inserted into the db! This is bad and hence
+#a safety mechanism is to used prepared statments instead and these are then able to be used through a placeholder such as :fn
+#SQL Server engine treats user data (the data that is sent into the prepared statments) as pure data and not a SQL that needs 
+#to be parsed or compiled again; that is the beauty of PreparedStatement. Meaning that any data that we give which would be an SQL
+#statement will not be read as a SQL statement but a raw string and hence will not execute that SQL command and hence we can avoid SQL
+#injection
+
+conn.execute(text("insert into author (first_name, last_name) values (:fn, :ln)"),  [{"fn": "Jane", "ln": "Doe"}])
+
+
+#transactions:
+txn = conn.begin()
+
+#committing a transaction
+txt.commit()
+
+#rollbacking a transaction
+txn.rollback()
