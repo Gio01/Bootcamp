@@ -9,3 +9,41 @@ one program at a time what will happen when we have multiple threads running? We
 what happens is that the other threads will be hanging until the processor finishes 
 running that other thread and then the processor will then run the next thread! 
 
+the processor is the one that executes our code. And we can supply
+diff functions to the processor asynchronously via the use of threads
+
+NOTE: While it appears to be asynchronously running (in parallel), there is only one processor
+and the threads can only go one by one into the processor to be executed since the 
+processor is only able to run one thing at a time!! The processor is just running
+things so fast that it appears to be running in parallel! 
+
+the use of multiple threads basically just allows us to run things in seperate 
+threads so that they can be executed by the processor in some time without 
+us needing to manually execute two seperate programs to get the two computations 
+that we want!
+
+When you see that a processor has multiple cores, it means that it is able to run 
+multiple programs at the same time! If we have 4 cores and 8 threads then that means 
+that each core has 2 threads and hence are able to run 2 programs at the same time 
+on each core! Meaning that we have multiple cores by which we can give threads to 
+so that it can run diff programs.
+
+Think of a core as having multiple processors within your machine but since they are 
+connected to each other they are faster so in a way we have 4 processors in our machines
+by which we can give threads to so that the processors/cores can run intructions for us
+
+
+Now if we have two programs that we want to run we can give one program to one core and then
+another program to another core and in this manner they truly are in parallel as they
+are running at the same time on two diff processors which makes sense because each core
+can run one set of instructions at a time!! This is called MULTI-PROCESSING
+
+while MULTI-THREADING is the idea of giving multiple threads to a processor and then 
+the processor is able to execute them all one after another since it can only 
+execute one at a single time!!
+
+"By formal definition, multithreading refers to the ability of a processor to execute
+multiple threads concurrently, where each thread runs a process. Whereas multiprocessing
+refers to the ability of a system to run multiple processors concurrently, where each 
+processor can run one or more threads."
+
