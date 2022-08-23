@@ -47,3 +47,15 @@ multiple threads concurrently, where each thread runs a process. Whereas multipr
 refers to the ability of a system to run multiple processors concurrently, where each 
 processor can run one or more threads."
 
+
+
+When we are using a lot of Input Output things we should use Threading and then 
+for when we are duing a lot of computational heavy tasks like math operations we should
+use multiprocessing to get things running faster!!
+
+The reason is that with threads we are still using a single core so that will not help us
+when doing intensive operations and hence it is better to use multiple cores to get that 
+running much faster!
+
+
+
