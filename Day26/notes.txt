@@ -173,3 +173,45 @@ Hence it is advisable for us to always use this future = True so that we can use
     from sqlalchemy import delete
     delete_stmt = delete(author_table).where(author_table.c.author_id == 13)
 
+
+
+------------------
+ORM (Object Relational Mapper)
+
+Domain Driven Design
+
+Bank
+    Name 
+    Address
+
+Customer
+    Customer Id
+    Name
+    Address
+    SSN
+    Accounts[]
+
+AccountBase
+    AccountId
+    Type
+    Balance
+    Withdraw()
+    Transactions()
+
+CheckingAccount
+PersonalAccount
+
+Transaction
+    Type
+    Amount
+
+
+So basically the advantage of using an ORM is to simply not need to 
+be writing so much SQL code! We can use this api notation for where the 
+ORM will create the SQL statements that are needed to perform the actions
+that we want! This can help with development time! 
+- This is also available through SQLAlchemy!
+
+
+
+

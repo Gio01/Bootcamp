@@ -1,0 +1,11 @@
+Concurrency allows us to be able to run multiple tasks at the same time (parallel)
+
+We use threads to be able to handle multiple tasks at the same time where a thread 
+is able to take on a single task/program to do/run
+
+The threads are then given to the processor for that single processor to execute 
+some program/task! Now given that there is a single processor and it can only process
+one program at a time what will happen when we have multiple threads running? Well
+what happens is that the other threads will be hanging until the processor finishes 
+running that other thread and then the processor will then run the next thread! 
+
