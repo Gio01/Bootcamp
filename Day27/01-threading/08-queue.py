@@ -4,6 +4,10 @@ import time
 import threading
 import queue
 
+'''
+Queue gives us thread safety already so we do not need to worry about locks and 
+ensuring that we do not have any deadlocks or other bugs in our code!
+'''
 
 class Pipeline(queue.Queue):
     def __init__(self):
