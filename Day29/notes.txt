@@ -1,0 +1,44 @@
+On the browser we can relay sessions to the back end to have a session created with 
+the user and the cookie is the one that will contain that session id so that we 
+can match that session id with that of the session id stored in the back end
+
+Now what if the client we are using is not the browser and we are wanting to connect
+to some api backend? Well the idea of a session with a cookie is not ideal here 
+since we would want to access some backend api from a desktop app and then 
+also from another api itself so how can we do this connection? We want to 
+create a secure way of sending info with someone else in a manner in which we 
+can verify and trust the user as who they claim to be! Now in the browser we 
+can verify the user via the use of the session id that is in the cookie to match 
+and verify to that of the session id that is stored in the backend but again something
+like a desktop app does not have a cookie or an api by which we can use to 
+request a connection with a backend and be able to verify ourselves to them so that 
+they can trust us and we can establish a connection. So what can we do?
+
+We can use a JWT (Json Web Token) which is a means by which we can establish a connection 
+with some other party in a manner where we can verify the other party and hence be able
+to trust that we are talking with whom they claim to be! Once that is established with 
+the JWT then we can begin to share info!
+
+So basically JWT is a JSON based security token for API authentication.
+
+Now we can also use this same JWT for the purpose of the client browser to that of the
+backend api! So this is a generalized/standard to be able to connect to the API
+securely with various clients!!
+
+Now the JWT is passed within the headers of a response to some request to the API
+
+JWT has three parts
+- header (contains the algoritm used for the signiarure)
+- payload (contains any info needed for access control such as the id of the user
+    to ensure that only that specified user is able to access some data)
+- signature (used to validate that the token has not been altered
+    this is created by concatenating the header with the payload and then signing the
+    that string with an algorithm (invoking that algorithm on that string) which 
+    is specified in the header!)
+
+
+When using the JWT token, on each request we need to pass a header called
+    Header
+        Authorization
+        Bearer <access_token>
+

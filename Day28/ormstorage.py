@@ -1,7 +1,7 @@
 from datetime import datetime
 from turtle import st
 from unicodedata import name
-from sqlalchemy import create_engine, select, update
+from sqlalchemy import create_engine, select, update, delete
 from sqlalchemy.orm import Session
 from models import Bugs
 import json
@@ -67,6 +67,14 @@ class ORMStorage:
 
         stmt = update(Bugs).where(Bugs.bug_id == id).values(name=data['name'],
         isClosed=data['isClosed'])
+
+        result = self.session.execute(stmt)
+        print(result)
+        self.session.commit()
+
+    def delete_bug(self, id):
+
+        stmt = delete(Bugs).where(Bugs.bug_id == id)
 
         result = self.session.execute(stmt)
         print(result)

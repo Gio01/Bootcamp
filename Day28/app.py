@@ -70,16 +70,21 @@ def update(id):
     #         return bug, 'Bug Was Updated'
 
     storage.update_bug(id, updated_data)
+    #need to have a guard for if that bug does not exist, or does
+    #the insert in alchemy handle this for us?
     return 'Bug Not Found', 404
 
-"""
+
 @app.route('/bugs/<int:id>', methods=['DELETE'])
 def delete(id):
-    for bug in bugs:
-        if bug['id'] == id:
-            bugs.remove(bug)
-            return '{}'
+    # for bug in bugs:
+    #     if bug['id'] == id:
+    #         bugs.remove(bug)
+    #         return '{}'
+    
+    storage.delete_bug(id)
+    #how do you check if this was done?
     return '{}', 404
-"""
+
 
 app.run(port=8080, debug=True)
