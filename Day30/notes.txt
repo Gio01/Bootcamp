@@ -1,0 +1,164 @@
+Cloud? (What is cloud computing?)
+    - multiple systems combined together to act as one system
+        CPU + Memory + Storage
+
+        So the reason that we are saying that they are being combined is because
+        these individual components such as the CPU can be in a different server rack
+        and the storage (DB) can be in another server which means that we can just join
+        together these physically seperate components to act as one machine by which 
+        we can use! 
+    
+    - Resources on demand
+        > Meaning that you are able to add things such as another server that same day!
+        > This is what is called Elasticity! 
+            - Meaning that without human intervention, you can simply click some botton and 
+            be able to add servers into your infrastructure (Ex: AWS)
+            - This is very important to be able to characterize some service as cloud!
+    
+    -  
+
+Data Center with resources that can be used?
+
+Infrastructure Investment
+    Physical Servers
+        Application Servers
+        Database Servers
+        Directory Servers (Active Directory by which we can control access managament
+            to network resources)
+        Storage Servers
+        Print Servers
+
+    Network
+
+    Staff
+
+    Real Estate
+
+    Electricity
+
+    Internet Connectivity
+
+
+IaaS (Infrastructure as a Service)
+- Virtualization
+- Servers
+- Storage
+- Networking 
+- However you are resposinble for the OS that you are 
+going to us and also any patches that are needed for that 
+machine and other things
+
+PaaS (Platform as a Service)
+- All of IaaS and also  
+    - Runtime
+    - Middleware
+    - OS
+
+- Meaning that you can simply pass in your Application
+onto that server and it should be able to run 
+
+SaaS (Software as a Service)
+- All of PaaS and 
+    - Data 
+    - Application
+    Ex: Netflix, Any google products, etc..
+
+Cloud Deployment Models (3 types)
+    - Private (OpenStack)
+    - Public (AWS, Google Cloud, Azure)
+    - Hybrid ([Fully Owned/Private Cloud] + Public)
+
+
+Content Delivery Network
+
+Application
+    dynamic resources -> process data and return dynamic result
+    static resources -> html, css, js, ico, jpg
+
+Essentially what happens is that when we want to look up some site
+instead of having to access the actual server of the site, AWS
+will point us to a CDN by which it will then point us to some
+edge location to be able to provide us with the cached version of the
+site and hence we can get the site faster.
+
+We can use this idea through the help of CloudFront on AWS
+
+
+
+Within a data center that contains servers, each of those physical 
+servers has a host OS! (which was then later eliminated completely
+with the use of a hypervisor OS so that we would not need to use 
+memory on that server for the host OS!)
+
+However when we connect to a virtual computer over the web such as through
+the use of AWS, this is us connecting to a virtual computer which is available
+on top of that host OS is what we call as a hyperviser!
+- So essentially it is similar to that of on AWS we are opening a Virtual 
+    box instance on that remote server! 
+- We are going to be using that hypervisor and eliminate the host system so that 
+we can then be able to choose what OS we want in that hypervisor without there being 
+memory space taken up in the server by a host OS! 
+
+Then when we choose a VM in AWS we are getting a machine that will run on a slice of the
+memory storage on the host server! In this manner many people can be using a slice of the
+memory within the same server! 
+
+
+----------------
+
+Now we created a User -> an EC2 instance -> a security group for SSH & HTTP in security inbound ->
+httpd (Apache Server) -> downloaded an html template to host in /var/www/html 
+
+Now instead of doing all this through AWS we can use AWS CloudFormation to 
+create the infrastructure (the AWS stuff we added), such as the adding of 
+HTTP as an inbound and anything else.
+
+
+Also in the beginning of the creation of a new EC2 instance what we can do is 
+write a script within the user data found in the creatin of an instance within
+AWS where we can give its bash commands for the instance to run as soon 
+as the instance is created!
+
+Ex: Within the user data!  
+#!/bin/bash
+sudo su
+yum update -y
+yum install httpd -y
+systemctl start httpd
+cd /var/www/html
+wget https://html5up.net/paradigm-shift/download --no-check-certificate
+unzip download
+
+
+-------------
+Template instance
+
+Once we have created an instance template with the configs that we want,
+we can then use that template to launch templates using that template
+instead of needing to manually create them from scratch again
+
+
+Image
+Now by creating an image what we are doing is creating an instance of the current
+snapshot of the currently running EC2 which means that we do not need to re 
+install things such as httpd again and instead this image will have the same 
+things already installed for us from the running instance!
+- this is different than the template as the template has to run the start up
+code in order to then have the same things installed to that of some previously
+running instance! 
+
+Now when you craete an image a snapshot was taken an that is within the Elastic Block
+Snapshots section so if you wanted to delete the image you would also need to delete
+that snapshot within there! 
+
+--------------
+
+Now if we wanted to deploy our app in a server what we can do is run ng build to create 
+a build version of our application which we can then use to deploy onto the server!
+
+the server will need this packaged version of the app because in the browser it is the 
+packaged build that actually gets displayed and not the entire normal app that we code in!
+
+
+
+
