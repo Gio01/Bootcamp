@@ -159,6 +159,53 @@ a build version of our application which we can then use to deploy onto the serv
 the server will need this packaged version of the app because in the browser it is the 
 packaged build that actually gets displayed and not the entire normal app that we code in!
 
+We just need to pack the code in a zip and then unzip it within the /var/www/html Directory
+within the EC2 instance so that the index.html file and all the other files are within the 
+this same directory and then the apache server will find the index.html and other files needed
+to host the site on the server! 
+
+
+Now when we have a lot of traffic we can use balance loaders so that the incoming traffic
+can be divided up and taken into diff servers that are running the same website! Meaning 
+that we can feed the site to more users without exhausting a single server! 
+
+Now how can we determine from where the server is the one that the user is going to from 
+the load balancer? Well one way is that we can simply craete an html page that says server 1 but
+instead we can get the meta-deta from the instance by using curl on this:
+
+curl http://169.254.169.254/latest/dynamic/instance-identity/document
+{
+  "accountId" : "145227758054",
+  "architecture" : "x86_64",
+  "availabilityZone" : "us-east-1c",
+  "billingProducts" : null,
+  "devpayProductCodes" : null,
+  "marketplaceProductCodes" : null,
+  "imageId" : "ami-05fa00d4c63e32376",
+  "instanceId" : "i-0d288423237b1e523",
+  "instanceType" : "t2.micro",
+  "kernelId" : null,
+  "pendingTime" : "2022-08-30T14:06:29Z",
+  "privateIp" : "172.31.18.40",
+  "ramdiskId" : null,
+  "region" : "us-east-1",
+  "version" : "2017-09-30"
+}
+
+
+Now we can craete html pages based on this document that we have gotten here so we can 
+display this meta-data so we can know from which server this is coming from!
+
+Now this ip address can be used within each insteance and the data that is outputed will
+be from that specific instance! 
+
+ curl http://169.254.169.254/latest/dynamic/instance-identity/document > /var/www/html/index.html
+
+So after running this command we have overwritten the data in the index.html with the 
+meta-data that we found in the server using the previous curl command to get the meta-data
+
+Then based on the instanceid that is found the curl output document we can see from which 
+server it is that the index.html is coming from 
 
 
 
