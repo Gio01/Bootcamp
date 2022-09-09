@@ -1,0 +1,320 @@
+Docs for VPC: https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html
+
+What is a Virtual Priavate network?
+- With this VPC you are able to launch various AWS resources such as an 
+EC2 within a virtual network that you define. 
+- It is the same as if it was a physicial network infrastructure but it is all
+within the AWS infrastructure.
+
+Once you have created the VPC you can create subnets!
+- subnets -> a range of IP addresses in your VPC by which you can use 
+    to define those AWS resources you want within your VPC using those
+    specific subnet IPs
+    > so instead of AWS creating an IP for your instance you would use those 
+    subnet IPs so that you can see exactly what is within your VPC based 
+    on those IPs
+
+Other features you have with a VPC:
+
+- routing -> you can define where it is that you want your network traffic,
+    from your subnet or gateway, to go to. You use Route Tables to define this
+
+- gateways and endpoints -> a gateway connects your VPC to another network
+    Ex: using an internet gateway to connect your VPC to the internet!
+
+- peering connections -> you can connect multiple VPC with eachother
+
+- traffic mirroring -> you can copy network traffic from network interfaces
+    and send it to security and monitoring appliances for deep packer inspection
+
+- transit gateway -> acts as a central hub where you can route traffic between
+    your VPC and and AWS connect connections
+
+- VPC flow logs -> captures info about the IP traffic going to and from network
+    interfaces in your VPC
+
+- VPC connections -> connect your VPCs to your on premise networks using AWS Virtual
+    private network (VPN)
+
+
+------------------------------
+AWS Networking Deep Dive: Virtual Private Cloud (Pluralsight course vid!)
+https://app.pluralsight.com/course-player?clipId=1de1b512-c09d-4ffb-a920-b8299ad90033
+
+# Creating Secure Virtual Private Clouds (VPCs):
+
+Why seperate Public and Priavte VPCs?
+Ex: you have one VPC that will have a database and then have another
+VPC that will have a web server running on there with an internet gateway to have 
+the website on the webserver to be accessible by the internet!
+
+Why?
+- security!!! You would not want the public users to have access to the area in 
+the VPC that holds something that should be private like a database!
+- You want to isolate instances from   
+    > the internet
+    > other instances
+    > on-premise networks
+
+another reason is also scalability!
+
+One manner in which you can do this is you have the db within the same VPC and
+what you can do is simply use control groups to only allow access to certain 
+people and then also have a private IP on that db so it is not accessible from the 
+internet! 
+- However if there is a bug on the website that is only on that same VPC what can 
+happen is that they can use that to then get access to things that are within the VPC
+which would be bad because that would mean that they could get access to the db that 
+is within that same VPC
+- So while things like security groups and also private IP for db can be good, you can 
+never be too sure that nothing will happen because it can take one single config issue
+in the setup to cause huge issues!
+
+
+NOTE: Most of the default things on the AWS VPC config is actually the enemy! You will
+most often not want to use these dafults because it is not the most secure thing at all!
+
+
+Creating the Public VPC (this will contain the web server with the website!)
+
+VPC [web server (www.1 .10 web-pub on 10.1.254.0/24) -> router -> Internet Gateway (IGW)] -> internet
+
+Go to VPC in amazon
+- create a VPC 
+    > ipv4 block = 10.1.0.0/16
+    > No ipv6 block
+
+
+- create a subnet
+    > using the web-vpc we had just created
+    > pick an availbility zone Ex: us-east-a1 so that we can know where things are in the subnet
+    > ipv4 CIDR block 10.1.254.0/24
+
+- create a route table (web-pub)
+    > using the web-pub vpc!
+    > this will create a route 10.1.0.0/16 with a local target which means the local VPC and hence 
+    this means that any traffic that is going to 10.1.0.0/16 needs to stay local within this
+    subnet!
+    > AWS has this hierarchy which means that there is a hierarchy which tells us that the subnet
+    will be sub-networks from the VPC! So here we are not able to make crazy schemes as you can 
+    if this was physicial! Keep this in mind! 
+    > add a subnet association with that of the subnet at 10.1.254.0/24 subnet!
+        > in doing this we are then able to connect the subnet to the router to control the traffic
+
+- create the Internet Gateway (web-igw)
+    > attach the gateway to the VPC we have created!
+
+- go back to the routes table
+    > edit the routes!
+    > add a default route destination of 0.0.0.0/0 which means that any traffic going to any 
+    address outside in the internet will go to the interbet gateway to then be trafficed to where
+    it needs to go!
+
+- create a secuirty group for the vpc to only allow certain IPs in
+    > SSH custom 24.96.0.0/16
+    > HTTP anywhere (since this is a public website that we want anyone to be able to reach!)
+
+Go to EC2 in AWS
+- go to network interface and create one  
+    > assign a subnet to the EC2
+    > you can add a custom IP which will be 10.1.254.10
+    > select the security group that we had created!
+
+- go to elastic IP so assign an elastic IP address
+    > in doing this we can then cause AWS to not keep changing the EC2 instance public 
+    IP address on each stop and start of an instance! We can cause it to stay with that 
+    same IP so that people can simply hit that same IP address and not need to change the 
+    public IP endpoint to hit our website! 
+
+Now when we create the EC2 instance we can add the network web-vpc and also the subnet web-pub
+and for the eth0 we would also add that subnet!
+Add the secuirty group we craeted! 
+
+Now in this manner we are then able to huck everything up within this public enpoint within our
+VPC!! 
+ 
+
+
+
+-------------------------------
+
+Route 53 resolver
+- a solution that by default responds to DNS requests realted to VPC domain names
+- so basically it is a DNS that is able to resolve domain names into IP addresses that are needed
+to access a site! 
+
+
+-------------------------------
+
+With an Auto Scaling group what you can due is create a scaling plan by which 
+we can automate the scaling of different resource groups and how they will need 
+to change in order to comply with the scaling that is needed! 
+
+We need to do the following:
+- create a launch template
+- create target group in the load balancing
+- create an auto scaling group within the auto scaling!
+- 
+
+One thing about this is that when one instance is to be terminated or is down, 
+it will be able to automatically be able to start up another instance based on the
+number of instances that you want running which you define that number within 
+the creation of the auto scaling group process! 
+
+In this manner if a server is down a new one will be gonig back up to ensure that 
+people are able to hit those sites on different servers for the given amount you
+want and not have a case where you run out of running servers! 
+
+-----------------------------
+
+In python we can use python freeze to see the list of depencies that are needed
+to run an app and we can then pipe that into a file called requirements.txt
+
+Then later on we can simply run pip install -r requirements.txt in order to 
+install all of those things as needed if we were to clone it somewhere else 
+and do not need to manually install them all one by one! 
+
+
+-----------------------------
+
+When using an EC2 instance and when we try to hit it we will get a message saying that 
+you are not allowed to enter and to contact the admin or something like that and 
+that is because we do not have something running on the server that will handle 
+traffic going to that EC2 instance such as an Apache server running on that instance
+or an ngix server running to be able to handle the traffic and get that server page!
+
+Now what we can do unlike how what we did with hosting the angular app directly on 
+Apache, what we did is start the nginx server and now we want to create a config 
+file to send any traffic that is going to port 80 which would be hitting nginx, to 
+instead hit the flask app that we will have running on port 8080!
+
+This is referred to as a reverse proxy where when we hit the proxy it will route the 
+connectino to the actual server that we want to get to!
+
+A regular proxy server just acts as a server in itself so it would not route to 
+something else!
+
+sudo amazon-linux-extras install nginx1 -y
+
+sudo systemctl start nginx
+
+myapp.conf file:
+
+server {
+    listen 80 default_server;
+    server_name _;
+    access_log  /var/log/nginx/access.log;
+    error_log  /var/log/nginx/error.log;
+
+    location / {
+        proxy_pass         http://127.0.0.1:8080/;
+        proxy_redirect     off;
+
+        proxy_set_header   Host                 $host;
+        proxy_set_header   X-Real-IP            $remote_addr;
+        proxy_set_header   X-Forwarded-For      $proxy_add_x_forwarded_for;
+        proxy_set_header   X-Forwarded-Proto    $scheme;
+    }
+}
+
+
+create myapp.conf file in the /etc/nginx/conf.d folder (use sudo) with the above contents
+
+This will cause the enpoint of the public ip with the port 80 (the default) to be rerouted 
+to that of the python flask app on port 8080 without us needing to directly hit the public 
+ip with the port 8080. Instead by just hitting the public ip we will get the flask app!
+
+Now instead of needing to have the flask app always running you can craete a service 
+that you can then just start which will start up the application!
+so then you can run sudo systemctl start myapp.service
+
+to create the service you need to create a in the /etc/systemd/system directory:
+/etc/systemd/system/myapp.service
+
+within this file you will write out what it is that you need for the service to do 
+when it is started! 
+
+[Unit]
+Description=Gunicorn daemon to serve my flaskapp
+After=network.target
+[Service]
+User=ec2-user
+Group=ec2-user
+WorkingDirectory=/home/ec2-user/myapp
+ExecStart=/home/ec2-user/myapp/venv/bin/python3 /home/ec2-user/myapp/app.py
+[Install]
+WantedBy=multi-user.target
+
+Now this is Gunicorn that is then able to be called using the systemctl start myapp.service
+command!
+
+Now that we have created this reverse proxy service there is no need for us to have 
+the port 8080 open on AWS EC2 instance and hence we can simply just have the HTTP 80
+port open which will cause for the reverse proxy to send the request to that of 
+app.py flask application to be requested and it will then hit the get api and that 
+will return Hello, World!
+
+
+------------------
+AWS CLI
+
+aws configure
+- use the access key id and the secret key that we creatd when we first craeted the user!
+
+We are then able to run aws cli commands using the many AWS cli commands located in the 
+AWS CLI command reference 
+
+
+---------------
+S3
+is just an AWS service by which we can store files on there! 
+
+everything that is stored there is an object with a key-value pair where the key
+is the name of the file and the value is the actual file contents! 
+
+Within S3 we can have files, we can have videos and we can even use this service 
+to host a static website! Meaning that it is simply just an index.html page with 
+data and nothing crazy with JS 
+
+-------------------
+
+
+HW:
+create a build of the day 9 angular appplication and then use that 
+to host into the S3 bucket by using the index.html file as the 
+entrypoint!!
+
+
+-------------------
+
+There are three ways in which we can build our applications on AWS
+1. App + EC2
+2. EBS - Elastic been stalk where we just feed the app to EBS and it will 
+create the EC2 instances and any target groups and other infrastrusture for 
+us. We just need to feed the app to it and it will figure everything up for us
+3. AWS lambda where we can split up our functionality into multiple parts
+    - this would work by having API gateway be the trigger based on user 
+    actions which will trigger and call the needed functions that are needed 
+    to do the needed functionality
+    - We can also add those individual lamda functions into a Queue to chain
+    reactions! This would be through the use of SQS
+
+Database options:
+- RDS (SQL)
+- DynamoDB (NoSQL)
+
+
+We can use python to use any of the AWS services using an api library called
+Boto3 to get programatic access to AWS services! 
+
+---------------
+HW
+
+import the functionality of the mysql bug tracker flask api we created
+and use that code to create that db service on RDS service in AWS for 
+mysql!
+
+LB -> EX2 in target group -> Flask server running on EC2 -> RDB data
+
+
+bug-tracker-db.cqiifygrupcw.us-east-1.rds.amazonaws.com

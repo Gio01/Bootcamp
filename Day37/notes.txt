@@ -1,0 +1,59 @@
+IAM:
+Users
+    Accounts
+
+Groups
+    Group of users
+
+Roles
+
+Policies
+    Access Privileges 
+
+Create a group called "Operations"
+
+Create a user called "ops_user"
+
+Add the "ops_user" to the "Operations" group
+
+Add a policy to the "Operations" group and verify if the user will inherit
+these policies!
+
+ops_user
+Access key ID: AKIASDUB7XHTBXKQGSIH
+Secret Access Key: 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
+
+
+Policies define three things:
+- what persmissions you want to have 
+- what level of permissions you want to have
+- on what resources it is that you want to have permissions for!
+
+
+Now when needing to have certain acess to resources within an instance the bad 
+practice would be to copy the access key and then secret access key into the 
+EC2 instance but that is bad practice because if someone were to get access to the 
+EC2 that would mean that they would also now have access to the access key and 
+secret key because the config file where they go in the ec2 instance is not 
+protected as you can simply cat the file and get that data! Meaning that we should 
+not be doing this!
+
+Instead what we can do is give the ec2 instance itself some IAM role and then 
+within there allow that ec2 instance to have access to certain resources that we 
+can then have access to within the ec2 instance! 
+
+
+---------------------
+
+CloudFormation
+
+With this service we are able to use code in order to create an AWS infrastructure 
+by which we are then able to create certain services that we need without 
+manually needing to do that!
+
+
+---------------------
+Guest speaker:
+
+Dev-Ops using GitLab!
+

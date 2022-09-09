@@ -1,0 +1,79 @@
+DynamoDB
+- it is not always consistent and this has to do with there being latency in 
+getting the data so you need to wait a lil until all of the data is there 
+and hence it can all appear after a bit of querying it!
+
+Using the aws cli:
+
+Get the items in the users table!
+aws dynamodb scan --table-name users
+
+Get just the employed attribute from all of the itwms in the users table!
+aws dynamodb scan --table-name users --projection-expression "employed"
+
+get the orgs and employed attribute from all of the items in the users table! 
+aws dynamodb scan --table-name users --projection-expression "employed, orgs"
+
+
+This is used to make a query and get the item where the id is 2
+We are matching the json object of the id here to match with an item in the 
+users table!
+aws dynamodb query --table-name users --key-condition-expression "id=:id" 
+--expression-attribute-values '{":id" : { "N" : "2"}}'
+
+We can also just query for things by just using the get-item but now there is an
+issue with powershell where we need to escape the " " for it to work!
+aws dynamodb get-item --table-name users --key '{\"id\" : {\"N\" : \"2\"}}'
+
+otherwise we would need to just run if running on linux or mac
+aws dynamodb get-item --table-name users --key '{"id" : {"N" : "2"}}'
+
+
+Here we can also update the employed attribute for a given user based on their id!
+aws dynamodb update-item --table-name users --key '{"id" : {"N" : "3" }}' 
+--update-expression "SET employed=:employed_value" --expression-attribute-values 
+'{":employed_value" : {"BOOL" : false}}'
+
+then when we get-item we will see those changes! 
+
+We can also set new attributes for a certain user based on their id!
+So here we added a city attribute and also updated the employee attribute! 
+aws dynamodb update-item --table-name users --key '{"id" : {"N" : "3" }}' 
+--update-expression "SET employed=:employed_value, city=:city_value" 
+--expression-attribute-values '{":employed_value" : {"BOOL" : false}, ":city_value" : { "S" : "Houston"}}'
+
+
+We can also filter for certain users based on whether they have certain attribute
+such as whether a user has the attribute city or not! 
+aws dynamodb scan --table-name users --filter-expression="attribute_exists(city)"
+
+
+We can also add new users into the users table by using the put-item!!
+aws dynamodb put-item --table-name users --item '{"id" : {"N" : "4"}, "name" : {"S" : "Philip"}}'
+
+
+We can also delete items from the users table by using the delete-item command!
+aws dynamodb delete-item --table-name users --key '{"id" : {"N" : "4"}}'
+
+
+--------------------
+
+Using the SQS Messaging queues
+
+We can use this command in order to get the list of queues that are in my account!
+aws sqs list-queues
+
+
+We can send a new message into the message queue
+aws sqs send-message --queue-url=https://sqs.us-east-1.amazonaws.com/145227758054/test-queue --message-body="This is another message"
+
+
+https://sqs.us-east-1.amazonaws.com/145227758054/test-queue
+
+We can also delete messages that our in our message queue
+
+aws sqs delete-message --queue-url=https://sqs.us-east-1.amazonaws.com/145227758054/test-queue --reciept-handler='AQEB7/XlW+eL7Nz9CEGbfYTdfv6yX3lOivEmrOhX5QpabU0WH6oea6fizqSPd9WB5QSBi2H6GQdIeNsfzeHJoGSbGWA+l/MOrESFtIEecLZEOeP+ALkQS/HNN5jwY/lznVo1At30+G0cVULuzc05+oVgq42FVvPtaG8JFAFyCwX8g3GMBpncxVSVxArSVvVcamE1Zu/fzp1N5ZVGplSF/oxBAqMcqa2uAkJ5ZFBIlNaVmGzzZda05KB/uP3Osxd92RWscZdamTnG9nsmQHVdoA1I4JfCGxtnlEn9h0YFNM7nCN6IJt6DZA4szvzs0BmGtjy7dqLfPrVniewPYZPxOeoUd6wnYdnXJDUZMBIjo/O/vqyDPLY/O5dRESTVKaJOa5wRNxGqC9aCHkoy7drZDPBtBA=='
+
+
+aws sqs receive-message --queue-url=https://sqs.us-east-1.amazonaws.com/145227758054/test-queue
+
